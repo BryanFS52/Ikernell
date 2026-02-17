@@ -10,7 +10,7 @@ export function Navbar() {
 
     const handleCerrarSesion = () => {
         cerrarSesion();
-        router.push('/login');
+        router.push('/'); // Redirigir al home público
     };
 
     if (!usuario) return null;

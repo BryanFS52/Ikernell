@@ -155,3 +155,5 @@ export function HomePrivada() {
         </div>
     );
 }
+
+export default HomePrivada;

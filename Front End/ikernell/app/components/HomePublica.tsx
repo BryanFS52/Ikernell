@@ -46,16 +46,12 @@ export function HomePublica() {
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
             {/* Hero Section */}
             <section className="relative px-6 py-20 text-white overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700">
-                <div className="absolute inset-0 opacity-30 bg-cover bg-center" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}></div>
                 <div className="relative z-10 max-w-6xl mx-auto text-center">
                     <h1 className="text-5xl md:text-6xl font-bold mb-4">Bienvenido a Ikernell</h1>
                     <div className="flex gap-4 justify-center">
                         <Link href="/login" className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium shadow-lg">
                             Iniciar Sesión
                         </Link>
-                        <button onClick={() => document.getElementById('preguntas')?.scrollIntoView({ behavior: 'smooth' })} className="px-8 py-3 border-2 border-blue-300 text-blue-100 rounded-lg hover:bg-blue-900/50 transition font-medium">
-                            Ver Preguntas
-                        </button>
                     </div>
                 </div>
             </section>
@@ -99,12 +95,13 @@ export function HomePublica() {
                         <FormularioPreguntaPublica onSuccess={cargarPreguntas} />
                     </div>
                 </div>
-            </section>
 
-            {/* Footer */}
-            <footer className="mt-16 bg-gray-100 border-t text-center py-6 text-gray-600">
+                <footer className="mt-16 text-center py-6 text-bray-600">
                 <p>&copy; 2026 Ikernell. Sistema de Gestión Empresarial.</p>
             </footer>
+            </section>
         </div>
     );
 }
+
+export default HomePublica;
