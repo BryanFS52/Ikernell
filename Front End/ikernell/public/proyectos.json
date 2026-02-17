@@ -1,0 +1,26 @@
+[
+  {
+    "idProyecto": 1,
+    "nombre": "Sistema de Gestión",
+    "descripcion": "Sistema para gestionar recursos empresariales",
+    "fechaInicio": "2024-01-15",
+    "fechaFin": "2024-06-30",
+    "estado": true
+  },
+  {
+    "idProyecto": 2,
+    "nombre": "App Móvil",
+    "descripcion": "Aplicación móvil para clientes",
+    "fechaInicio": "2024-02-01",
+    "fechaFin": "2024-08-15",
+    "estado": true
+  },
+  {
+    "idProyecto": 3,
+    "nombre": "Portal Web",
+    "descripcion": "Portal web corporativo",
+    "fechaInicio": "2024-03-10",
+    "fechaFin": "2024-12-20",
+    "estado": true
+  }
+]
