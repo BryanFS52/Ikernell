@@ -21,7 +21,7 @@ export default function EditarProyectoPage() {
 
     return (
         <div className="page">
-            <h1>Editar Proyecto</h1>
+            <h1>Editar proyecto</h1>
 
             <ProyectoForm
                 mode="editar"

@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { Persona } from "@/types/persona"
 import { getPersona, desactivarPersona } from "@/services/persona.service";
 import { useRouter } from "next/navigation";
+import { usePermissions } from "@/hooks/usePermissions";
 
 export default function PersonaPage() {
     const [persona, setPersona] = useState<Persona[]>([]);
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+    const { canManagePersonas, canCreatePersonas, canEditPersonas, canDeletePersonas } = usePermissions();
 
     useEffect(() => {
         cargarPersonas();
@@ -45,18 +47,30 @@ export default function PersonaPage() {
         return <p className="text-center mt-10">Cargando personas</p>;
     }
 
+    // Verificar permisos básicos para ver la página
+    if (!canManagePersonas()) {
+        return (
+            <div className="page">
+                <h1 className="text-2xl font-bold text-red-600">Acceso Denegado</h1>
+                <p className="mt-4">No tienes permisos para ver esta página.</p>
+            </div>
+        );
+    }
+
     return (
         <div className="page">
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold">Personas</h1>
 
                 <div className="flex items-center space-x-4">
-                    <button
-                        onClick={() => router.push("/personas/crear")}
-                        className="btn-primary"
-                    >
-                        Nueva Persona
-                    </button>
+                    {canCreatePersonas() && (
+                        <button
+                            onClick={() => router.push("/personas/crear")}
+                            className="btn-primary"
+                        >
+                            Nueva Persona
+                        </button>
+                    )}
 
                     <button
                         onClick={() => router.push("/personas/desactivadas")}
@@ -107,18 +121,23 @@ export default function PersonaPage() {
                                         Ver
                                     </button>
 
-                                    <button
-                                        className="btn-edit"
-                                        onClick={() => handleEditar(p.idPersona)}
-                                    >
-                                        Editar
-                                    </button>
-                                    <button
-                                        className="btn-delete"
-                                        onClick={() => handleEliminar(p.idPersona)}
-                                    >
-                                        Desactivar
-                                    </button>
+                                    {canEditPersonas() && (
+                                        <button
+                                            className="btn-edit"
+                                            onClick={() => handleEditar(p.idPersona)}
+                                        >
+                                            Editar
+                                        </button>
+                                    )}
+
+                                    {canDeletePersonas() && (
+                                        <button
+                                            className="btn-delete"
+                                            onClick={() => handleEliminar(p.idPersona)}
+                                        >
+                                            Desactivar
+                                        </button>
+                                    )}
                                 </td>
                             </tr>
                         )))}

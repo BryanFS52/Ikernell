@@ -34,7 +34,7 @@ export default function AsignarDesarrolladorPage() {
                     index === self.findIndex(proyecto => proyecto.idProyecto === p.idProyecto)
                 );
 
-            // Filtrar personas únicas y válidas  
+            // Filtrar personas únicas y válidas
             const personasValidas = personasData
                 .filter((p, index, self) =>
                     p.idPersona &&

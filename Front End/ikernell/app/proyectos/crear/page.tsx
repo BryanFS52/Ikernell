@@ -44,7 +44,7 @@ export default function CrearProyectoPage() {
 
     return (
         <div className="page">
-            <h1 className="text-2xl font-bold mb-4">Nuevo Proyecto</h1>
+            <h1 className="text-2xl font-bold mb-4">Nuevo proyecto</h1>
 
             <form onSubmit={handleSubmit} className="form">
                 <div className="form-grid-2">

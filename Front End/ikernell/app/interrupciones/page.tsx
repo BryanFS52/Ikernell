@@ -4,12 +4,21 @@ import { useEffect, useState } from "react";
 import { Interrupcion } from "@/types/interrupcion";
 import { getInterrupciones, eliminarInterrupcion } from "@/services/interrupcion.service";
 import { useRouter } from "next/navigation";
+import { usePermissions } from "@/hooks/usePermissions";
+import { ConditionalRender } from "@/components/ConditionalRender";
+import { useAuth } from "@/app/context/AuthContext";
 
 
 export default function InterrupcionesPage() {
     const [interrupciones, setInterrupciones] = useState<Interrupcion[]>([]);
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+    const { usuario } = useAuth();
+    const {
+        canRegisterInterruptions,
+        canViewAllInterruptions,
+        isDesarrollador
+    } = usePermissions();
 
     useEffect(() => {
         cargarInterrupciones();
@@ -19,7 +28,19 @@ export default function InterrupcionesPage() {
         setLoading(true);
         try {
             const data = await getInterrupciones();
-            setInterrupciones(data || []);
+            
+            let interrupcionesFiltradas = data || [];
+            
+            // Si es desarrollador, solo mostrar interrupciones de proyectos donde esté asignado
+            if (isDesarrollador() && usuario) {
+                interrupcionesFiltradas = (data || []).filter(interrupcion => 
+                    interrupcion.proyecto?.personas?.some(persona => 
+                        persona.idPersona === usuario.idPersona
+                    )
+                );
+            }
+            
+            setInterrupciones(interrupcionesFiltradas);
         } catch (error) {
             console.error("Error al cargar interrupciones:", error);
             setInterrupciones([]);
@@ -52,12 +73,14 @@ export default function InterrupcionesPage() {
                 <h1 className="text-2xl font-bold">Interrupciones</h1>
 
                 <div className="flex items-center space-x-4">
-                    <button
-                        onClick={() => router.push("/interrupciones/crear")}
-                        className="btn-primary"
-                    >
-                        Nueva Interrupción
-                    </button>
+                    <ConditionalRender condition={canRegisterInterruptions()}>
+                        <button
+                            onClick={() => router.push("/interrupciones/crear")}
+                            className="btn-primary"
+                        >
+                            Nueva Interrupción
+                        </button>
+                    </ConditionalRender>
                 </div>
             </div>
 
@@ -92,18 +115,23 @@ export default function InterrupcionesPage() {
                                     <td>{i.persona ? `${i.persona.nombre} ${i.persona.apellido}` : 'Sin nombre'}</td>
                                     <td>{i.proyecto ? i.proyecto.nombre : 'No asignado'}</td>
                                     <td className="actions">
-                                        <button
-                                            className="btn-edit"
-                                            onClick={() => handleEditar(i.idInterrupcion)}
-                                        >
-                                            Editar
-                                        </button>
-                                        <button
-                                            className="btn-delete"
-                                            onClick={() => handleEliminar(i.idInterrupcion)}
-                                        >
-                                            Eliminar
-                                        </button>
+                                        <ConditionalRender condition={canViewAllInterruptions()}>
+                                            <button
+                                                className="btn-edit"
+                                                onClick={() => handleEditar(i.idInterrupcion)}
+                                            >
+                                                Editar
+                                            </button>
+                                        </ConditionalRender>
+                                        
+                                        <ConditionalRender condition={canViewAllInterruptions()}>
+                                            <button
+                                                className="btn-delete"
+                                                onClick={() => handleEliminar(i.idInterrupcion)}
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </ConditionalRender>
                                     </td>
                                 </tr>
                             ))

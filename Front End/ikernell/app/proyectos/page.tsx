@@ -5,11 +5,23 @@ import { useRouter } from "next/navigation";
 import { Proyecto } from "@/types/proyecto";
 import { getProyecto, desactivarProyecto } from "@/services/proyecto.service";
 import { Persona } from "@/types/persona";
+import { usePermissions } from "@/hooks/usePermissions";
+import { ConditionalRender } from "@/components/ConditionalRender";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function ProyectosPage() {
     const [proyectos, setProyectos] = useState<Proyecto[]>([]);
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const { usuario } = useAuth();
+    const {
+        canCreateProjects,
+        canAssignDevelopers,
+        canDeactivateProjects,
+        canViewAllProjects,
+        canViewAssignedProjectsOnly,
+        isDesarrollador
+    } = usePermissions();
     
     useEffect(() => {
         cargarProyectos();
@@ -21,12 +33,24 @@ export default function ProyectosPage() {
             console.log("Cargando proyectos...");
             const data = await getProyecto();
             console.log("Proyectos cargados:", data);
-            const uniqueProyectos = data.filter((p, index, self) =>
+            
+            let proyectosFiltrados = data;
+            
+            // Si es desarrollador, solo mostrar proyectos asignados
+            if (isDesarrollador() && usuario) {
+                proyectosFiltrados = data.filter(proyecto => 
+                    proyecto.personas?.some(persona => 
+                        persona.idPersona === usuario.idPersona
+                    )
+                );
+            }
+            
+            const uniqueProyectos = proyectosFiltrados.filter((p, index, self) =>
                 index === self.findIndex((t) => (
                     t.idProyecto === p.idProyecto
                 ))
             );
-            console.log("Proyectos únicos:", uniqueProyectos);
+            console.log("Proyectos únicos filtrados:", uniqueProyectos);
             setProyectos(uniqueProyectos);
 
         } catch (error) {
@@ -59,25 +83,35 @@ export default function ProyectosPage() {
         <div className="page">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold mr-4">Proyectos</h1>
-
-                <button
-                    onClick={() => router.push("/proyectos/crear")}
-                    className="btn-primary"
-                >
-                    Nuevo Proyecto
-                </button>
-                <button
-                    onClick={() => router.push("/proyectos/desactivados")}
-                    className="btn-secondary"
-                >
-                    Proyectos Desactivados
-                </button>
-                <button
-                    onClick={() => router.push("/proyectos/asignar")}
-                    className="btn-secondary"
-                >
-                    Asignar Desarrollador
-                </button>
+                
+                <div className="flex gap-2">
+                    <ConditionalRender condition={canCreateProjects()}>
+                        <button
+                            onClick={() => router.push("/proyectos/crear")}
+                            className="btn-primary"
+                        >
+                            Nuevo proyecto
+                        </button>
+                    </ConditionalRender>
+                    
+                    <ConditionalRender condition={canViewAllProjects()}>
+                        <button
+                            onClick={() => router.push("/proyectos/desactivados")}
+                            className="btn-secondary"
+                        >
+                            Proyectos desactivados
+                        </button>
+                    </ConditionalRender>
+                    
+                    <ConditionalRender condition={canAssignDevelopers()}>
+                        <button
+                            onClick={() => router.push("/proyectos/asignar")}
+                            className="btn-secondary"
+                        >
+                            Asignar desarrollador
+                        </button>
+                    </ConditionalRender>
+                </div>
             </div>
 
             <div className="table-container">
@@ -86,8 +120,8 @@ export default function ProyectosPage() {
                     <tr>
                         <th>Nombre del proyecto</th>
                         <th>Desarrollador</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
                         <th className="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -113,18 +147,24 @@ export default function ProyectosPage() {
                                     >
                                         Ver
                                     </button>
-                                    <button
-                                        className="btn-edit"
-                                        onClick={() => handleEditar(p.idProyecto)}
-                                    >
-                                        Editar
-                                    </button>
-                                    <button
-                                        className="btn-delete"
-                                        onClick={() => handleEliminar(p.idProyecto)}
-                                    >
-                                        Desactivar
-                                    </button>
+                                    
+                                    <ConditionalRender condition={canCreateProjects()}>
+                                        <button
+                                            className="btn-edit"
+                                            onClick={() => handleEditar(p.idProyecto)}
+                                        >
+                                            Editar
+                                        </button>
+                                    </ConditionalRender>
+                                    
+                                    <ConditionalRender condition={canDeactivateProjects()}>
+                                        <button
+                                            className="btn-delete"
+                                            onClick={() => handleEliminar(p.idProyecto)}
+                                        >
+                                            Desactivar
+                                        </button>
+                                    </ConditionalRender>
                                 </td>
                             </tr>
                         ))

@@ -216,7 +216,7 @@ export default function MiComponente() {
 
 ## Seguridad
 
-⚠️ **IMPORTANTE - Para Producción:**
+**IMPORTANTE - Para Producción:**
 
 1. **HTTPS obligatorio** - Las credenciales deben viajar por conexión segura
 2. **Hash de contraseñas** - El backend debe hashear las contraseñas con bcrypt o similar
@@ -228,12 +228,12 @@ export default function MiComponente() {
 
 ## Próximos Pasos Recomendados
 
-1. ✅ Implementar los endpoints en el backend
-2. ✅ Crear rol "Coordinador de Proyectos" en base de datos
-3. ✅ Crear usuario administrador inicial
-4. ✅ Testar login y creación de usuarios
-5. ⚠️ Implementar seguridad (HTTPS, hash de contraseñas)
-6. ⚠️ Agregar dos factores de autenticación (opcional)
+1. Implementar los endpoints en el backend
+2. Crear rol "Coordinador de Proyectos" en base de datos
+3. Crear usuario administrador inicial
+4. Testar login y creación de usuarios
+5. Implementar seguridad (HTTPS, hash de contraseñas)
+6. Agregar dos factores de autenticación (opcional)
 
 ---
 

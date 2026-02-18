@@ -7,12 +7,23 @@ import { useRouter } from "next/navigation";
 import { Proyecto } from "@/types/proyecto";
 import { getProyecto } from "@/services/proyecto.service";
 import { EstadoActividad } from "@/types/actividad";
+import { usePermissions } from "@/hooks/usePermissions";
+import { ConditionalRender } from "@/components/ConditionalRender";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function ActividadesPage() {
     const [actividad, setActividad] = useState<Actividad[]>([]);
     const [proyectos, setProyectos] = useState<Proyecto[]>([]);
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const { usuario } = useAuth();
+    const {
+        canCreateActivities,
+        canCompleteOwnActivities,
+        canCompleteAllActivities,
+        canViewAllProjects,
+        isDesarrollador
+    } = usePermissions();
 
     useEffect(() => {
         cargarActividades();
@@ -33,7 +44,17 @@ export default function ActividadesPage() {
         setLoading(true);
         try {
             const data = await getActividades();
-            setActividad(data);
+            
+            let actividadesFiltradas = data;
+            
+            // Si es desarrollador, solo mostrar actividades asignadas a él
+            if (isDesarrollador() && usuario) {
+                actividadesFiltradas = data.filter(actividad => 
+                    actividad.persona?.idPersona === usuario.idPersona
+                );
+            }
+            
+            setActividad(actividadesFiltradas);
 
         } catch (error) {
             console.error("Error al cargar actividades:", error);
@@ -88,12 +109,14 @@ export default function ActividadesPage() {
                 <h1 className="text-2xl font-bold">Actividades</h1>
 
                 <div className="flex gap-2">
-                    <button
-                        onClick={() => router.push("/actividades/crear")}
-                        className="btn-primary"
-                    >
-                        Nueva Actividad
-                    </button>
+                    <ConditionalRender condition={canCreateActivities()}>
+                        <button
+                            onClick={() => router.push("/actividades/crear")}
+                            className="btn-primary"
+                        >
+                            Nueva Actividad
+                        </button>
+                    </ConditionalRender>
                 </div>
             </div>
 
@@ -135,19 +158,30 @@ export default function ActividadesPage() {
                                     <td>{act.estado}</td>
 
                                     <td className="actions">
-                                        <button className="btn-edit" onClick={() => handleEditar(act.idActividad)}>
-                                            Editar
-                                        </button>
-                                        <button className="btn-delete" onClick={() => handleEliminar(act.idActividad)}>
-                                            Eliminar
-                                        </button>
-                                        {act.estado !== EstadoActividad.CIERRE && (
-                                            <button
-                                                className="btn-complete"
-                                                onClick={() => marcarActividadFinalizada(act.idActividad)}
-                                            >
-                                                Finalizar
+                                        <ConditionalRender condition={canCreateActivities()}>
+                                            <button className="btn-edit" onClick={() => handleEditar(act.idActividad)}>
+                                                Editar
                                             </button>
+                                        </ConditionalRender>
+                                        
+                                        <ConditionalRender condition={canCreateActivities()}>
+                                            <button className="btn-delete" onClick={() => handleEliminar(act.idActividad)}>
+                                                Eliminar
+                                            </button>
+                                        </ConditionalRender>
+                                        
+                                        {act.estado !== EstadoActividad.CIERRE && (
+                                            <ConditionalRender condition={
+                                                canCompleteAllActivities() || 
+                                                (canCompleteOwnActivities() && act.persona?.idPersona === usuario?.idPersona)
+                                            }>
+                                                <button
+                                                    className="btn-complete"
+                                                    onClick={() => marcarActividadFinalizada(act.idActividad)}
+                                                >
+                                                    Finalizar
+                                                </button>
+                                            </ConditionalRender>
                                         )}
                                     </td>
                                 </tr>

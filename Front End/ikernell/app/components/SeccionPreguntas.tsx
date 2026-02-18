@@ -102,7 +102,7 @@ export function SeccionPreguntas({
                                 </div>
                             </div>
                             <span className="text-gray-400 ml-4">
-                                {preguntasExpandidas.includes(pregunta.idPregunta) ? '▼' : '▶'}
+                                {preguntasExpandidas.includes(pregunta.idPregunta) ? 'Contraer' : 'Expandir'}
                             </span>
                         </div>
                     </div>

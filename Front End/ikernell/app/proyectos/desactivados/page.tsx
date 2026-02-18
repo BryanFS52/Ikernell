@@ -39,13 +39,13 @@ export default function ProyectosDesactivadosPage() {
     return (
         <div className="page">
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold">Proyectos Desactivados</h1>
+                <h1 className="text-2xl font-bold">Proyectos desactivados</h1>
 
                 <button
                     onClick={() => router.push("/proyectos")}
                     className="btn-primary"
                 >
-                    Proyectos Activos
+                    Proyectos activos
                 </button>
             </div>
 

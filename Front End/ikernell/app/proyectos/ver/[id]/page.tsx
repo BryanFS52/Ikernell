@@ -49,7 +49,7 @@ export default function VerProyectosPage() {
     return (
         <div className="page max-w-4xl mx-auto p-6">
             <h1 className="text-3xl font-bold mb-8 text-center text-blue-700">
-                Detalles del Proyecto
+                Detalles del proyecto
             </h1>
             <div className="bg-white shadow-lg rounded-lg p-6 border border-gray-200 space-y-6">
                 <h2 className="text-2xl font-semibold text-gray-800">{proyecto.nombre}</h2>
@@ -67,7 +67,7 @@ export default function VerProyectosPage() {
                     {proyecto.personas && proyecto.personas.length > 0 && (
                         <div className="bg-gray-50 p-4 rounded shadow-sm sm:col-span-2">
                             <h3 className="font-medium text-gray-700 mb-1">
-                                Desarrollador Asignado
+                                Desarrollador asignado
                             </h3>
 
                             <ul className="list-disc list-inside space-y-1">

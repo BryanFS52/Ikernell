@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Rol } from "@/types/rol";
 import { PersonaFormData, Persona } from "@/types/persona";
 import { useRouter } from "next/navigation";
-import { crearPersona, actualizarPersona } from "@/services/persona.service";
+import { crearPersona, actualizarPersona, getPersona } from "@/services/persona.service";
 
 export type PersonaFormProps = {
   initialData?: Persona;
@@ -74,11 +74,35 @@ export default function PersonaForm({
     }
   }
 
+  // Función para validar documento único
+  async function validateDocumentoUnico(documento: string): Promise<boolean> {
+    if (!documento) return true;
+    
+    try {
+      const personas = await getPersona();
+      const documentoExiste = personas.some((p: Persona) => 
+        p.documento === documento && 
+        (mode === "crear" || p.idPersona !== initialData?.idPersona)
+      );
+      return !documentoExiste;
+    } catch (error) {
+      console.error("Error al validar documento:", error);
+      return true; // En caso de error, permitir continuar
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (!form.nombre || !form.apellido || !form.documento || !form.idRol) {
       alert("Complete los campos obligatorios");
+      return;
+    }
+
+    // Validar documento único
+    const documentoValido = await validateDocumentoUnico(form.documento);
+    if (!documentoValido) {
+      alert("Ya existe una persona con este número de documento. Por favor, ingrese un documento único.");
       return;
     }
 

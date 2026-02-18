@@ -8,7 +8,7 @@ Necesitas crear un usuario **Coordinador de Proyectos** inicial en tu base de da
 
 ---
 
-## 📋 Pasos para Crear el Usuario Inicial
+## Pasos para Crear el Usuario Inicial
 
 ### **Opción 1: Directamente en la Base de Datos (SQL)**
 
@@ -122,7 +122,7 @@ Content-Type: application/json
 
 ---
 
-## ✅ Verificar que Funciona
+## Verificar que Funciona
 
 1. Abre `http://localhost:3000/login`
 2. Ingresa:
@@ -142,7 +142,7 @@ El sistema permite que el **Coordinador de Proyectos** publique noticias que tod
 
 ---
 
-## 🔧 Endpoints Requeridos en Backend
+## Endpoints Requeridos en Backend
 
 ### **GET** `/api/noticias`
 Obtener todas las noticias
@@ -202,7 +202,7 @@ Eliminar noticia
 
 ---
 
-## 💻 Ejemplo de Implementación (Spring Boot)
+## Ejemplo de Implementación (Spring Boot)
 
 ```java
 @RestController
@@ -263,16 +263,16 @@ public class NoticiaDTO {
 
 ---
 
-## 📱 Cómo Funciona en el Frontend
+## Cómo Funciona en el Frontend
 
 ### **Para Visitantes (sin login):**
-- ✅ Ver noticias publicadas
-- ❌ No pueden publicar
+- Ver noticias publicadas
+- No pueden publicar
 
 ### **Para Coordinador:**
-- ✅ Ver noticias publicadas
-- ✅ PUBLICAR nuevas noticias
-- ✅ El formulario aparece en HomePrivada
+- Ver noticias publicadas
+- PUBLICAR nuevas noticias
+- El formulario aparece en HomePrivada
 
 ### **Flujo de Publicación:**
 
@@ -286,9 +286,9 @@ public class NoticiaDTO {
 
 ---
 
-## 🔐 Seguridad
+## Seguridad
 
-⚠️ **IMPORTANTE:** 
+**IMPORTANTE:** 
 
 El frontend ahora verifca que el usuario sea "Coordinador de Proyectos" antes de mostrar el formulario:
 
@@ -353,26 +353,26 @@ Content-Type: application/json
 
 | Feature | Sin Login | Coordinador | Otro Usuario |
 |---------|-----------|-------------|--------------|
-| Ver noticias | ✅ Sí | ✅ Sí | ✅ Sí |
-| Publicar | ❌ No | ✅ Sí | ❌ No |
-| Editar | ❌ No | ❌ No (pronto) | ❌ No |
-| Eliminar | ❌ No | ❌ No (pronto) | ❌ No |
+| Ver noticias | Sí | Sí | Sí |
+| Publicar | No | Sí | No |
+| Editar | No | No (pronto) | No |
+| Eliminar | No | No (pronto) | No |
 
 ---
 
 ## 🆘 Troubleshooting
 
 ### **"Error al agregar noticia"**
-- ✅ Verifica que el endpoint POST `/api/noticias` existe
-- ✅ Verifica CORS en tu backend
-- ✅ Revisa logs del backend
+- Verifica que el endpoint POST `/api/noticias` existe
+- Verifica CORS en tu backend
+- Revisa logs del backend
 
 ### **El formulario no aparece**
-- ✅ Verifica que el usuario tiene rol "Coordinador de Proyectos"
-- ✅ Revisa el nombre exacto del rol en la BD
+- Verifica que el usuario tiene rol "Coordinador de Proyectos"
+- Revisa el nombre exacto del rol en la BD
 
 ### **Las noticias no se cargan**
-- ✅ Verifica GET `/api/noticias` en Postman
-- ✅ Asegúrate que hay noticias en la BD
-- ✅ Revisa errores en consola
+- Verifica GET `/api/noticias` en Postman
+- Asegúrate que hay noticias en la BD
+- Revisa errores en consola
 
