@@ -8,9 +8,16 @@ import { usePermissions } from "@/hooks/usePermissions";
 
 export default function PersonaPage() {
     const [persona, setPersona] = useState<Persona[]>([]);
-    const router = useRouter();
     const [loading, setLoading] = useState(true);
-    const { canManagePersonas, canCreatePersonas, canEditPersonas, canDeletePersonas } = usePermissions();
+    const [searchNombre, setSearchNombre] = useState("");
+    const [searchRol, setSearchRol] = useState("");
+    const router = useRouter();
+    const {
+        canManagePersonas,
+        canCreatePersonas,
+        canEditPersonas,
+        canDeletePersonas
+    } = usePermissions();
 
     useEffect(() => {
         cargarPersonas();
@@ -31,6 +38,7 @@ export default function PersonaPage() {
 
     async function handleEliminar(id: number) {
         if (!confirm("¿Estás seguro de que deseas desactivar a esta persona?")) return;
+
         try {
             await desactivarPersona(id);
             cargarPersonas();
@@ -42,6 +50,18 @@ export default function PersonaPage() {
     function handleEditar(id: number) {
         router.push(`/personas/editar/${id}`);
     }
+
+    const personaFiltradas = persona.filter((p) => {
+        const nombreCompleto = `${p.nombre ?? ""} ${p.apellido ?? ""}`.toLowerCase();
+
+        const coincideNombre = nombreCompleto.includes(searchNombre.toLowerCase());
+
+        const coincideRol = searchRol
+            ? p.rol?.nombre.toLowerCase() === searchRol.toLowerCase()
+            : true;
+
+        return coincideNombre && coincideRol;
+    });
 
     if (loading) {
         return <p className="text-center mt-10">Cargando personas</p>;
@@ -58,15 +78,17 @@ export default function PersonaPage() {
     }
 
     return (
-        <div className="page">
-            <div className="flex justify-between items-center mb-4">
+        <div className="max-w-6xl mx-auto p-6">
+
+            {/* Header */}
+            <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Personas</h1>
 
-                <div className="flex items-center space-x-4">
+                <div className="flex gap-2">
                     {canCreatePersonas() && (
                         <button
                             onClick={() => router.push("/personas/crear")}
-                            className="btn-primary"
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                         >
                             Nueva Persona
                         </button>
@@ -74,73 +96,116 @@ export default function PersonaPage() {
 
                     <button
                         onClick={() => router.push("/personas/desactivadas")}
-                        className="btn-secondary"
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                     >
                         Personas Desactivadas
                     </button>
                 </div>
             </div>
 
-            <div className="table-container">
-                <table className="custom-table">
-                    <thead>
+            {/*Barra de búsqueda */}
+            <div className="bg-white p-4 rounded-xl shadow border mb-6">
+                <div className="grid md:grid-cols-3 gap-4">
+
+                    <input
+                        type="text"
+                        placeholder="Buscar por nombre"
+                        value={searchNombre}
+                        onChange={(e) => setSearchNombre(e.target.value)}
+                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="Filtrar por rol"
+                        value={searchRol}
+                        onChange={(e) => setSearchRol(e.target.value)}
+                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+
+                    <button
+                        onClick={() => {
+                            setSearchNombre("");
+                            setSearchRol("");
+                        }}
+                        className="bg-gray-200 text-gray-700 rounded-lg px-4 py-2 hover:bg-gray-300 transition"
+                    >
+                        Limpiar filtros
+                    </button>
+
+                </div>
+            </div>
+
+            {/* Tabla */}
+            <div className="bg-white rounded-xl shadow border overflow-x-auto">
+                <table className="min-w-full text-sm text-left">
+                    <thead className="bg-blue-900 text-white uppercase text-xs">
                         <tr>
-                            <th>Nombre</th>
-                            <th>Documento</th>
-                            <th>Rol</th>
-                            <th>Estado</th>
-                            <th className="text-center">Acciones</th>
+                            <th className="px-6 py-3">Nombre</th>
+                            <th className="px-6 py-3">Documento</th>
+                            <th className="px-6 py-3">Rol</th>
+                            <th className="px-6 py-3">Estado</th>
+                            <th className="px-6 py-3 text-center">Acciones</th>
                         </tr>
                     </thead>
 
-                    <tbody>
-                        {persona.length === 0 ? (
+                    <tbody className="divide-y">
+                        {personaFiltradas.length === 0 ? (
                             <tr>
-                                <td colSpan={5} className="text-center py-4 text-gray-500">
-                                    No hay personas registradas
+                                <td colSpan={5} className="text-center py-6 text-gray-500">
+                                    No se encontraron personas
                                 </td>
                             </tr>
                         ) : (
-                        persona.map((p) => (
-                            <tr key={p.idPersona}>
-                                <td>{p.nombre ? `${p.nombre} ${p.apellido || ''}` : 'Sin nombre'}</td>
-                                <td>{p.documento || 'Sin documento'}</td>
-                                <td>{p.rol?.nombre || 'Sin rol'}</td>
-                                <td>
-                                    {p.estado ? (
-                                        <span className="badge-active">Activo</span>
-                                    ) : (
-                                        <span className="badge-inactive">Inactivo</span>
-                                    )}
-                                </td>
-                                <td className="actions">
-                                    <button
-                                        className="btn-view"
-                                        onClick={() => router.push(`/personas/ver/${p.idPersona}`)}
-                                    >
-                                        Ver
-                                    </button>
-
-                                    {canEditPersonas() && (
+                            personaFiltradas.map((p) => (
+                                <tr key={p.idPersona} className="hover:bg-gray-50">
+                                    <td className="px-6 py-4">
+                                        {p.nombre} {p.apellido}
+                                    </td>
+                                    <td className="px-6 py-4">{p.documento}</td>
+                                    <td className="px-6 py-4">
+                                        {p.rol?.nombre || "Sin rol"}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {p.estado ? (
+                                            <span className="px-3 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                                                Activo
+                                            </span>
+                                        ) : (
+                                            <span className="px-3 py-1 text-xs font-medium bg-red-100 text-red-700 rounded-full">
+                                                Inactivo
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td className="px-6 py-4 text-center space-x-2">
                                         <button
-                                            className="btn-edit"
-                                            onClick={() => handleEditar(p.idPersona)}
+                                            className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition"
+                                            onClick={() => router.push(`/personas/ver/${p.idPersona}`)}
                                         >
-                                            Editar
+                                            Ver
                                         </button>
-                                    )}
 
-                                    {canDeletePersonas() && (
-                                        <button
-                                            className="btn-delete"
-                                            onClick={() => handleEliminar(p.idPersona)}
-                                        >
-                                            Desactivar
-                                        </button>
-                                    )}
-                                </td>
-                            </tr>
-                        )))}
+                                        {canEditPersonas() && (
+                                            <button
+                                                className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
+                                                onClick={() => handleEditar(p.idPersona)}
+                                            >
+                                                Editar
+                                            </button>
+                                        )}
+
+                                        {canDeletePersonas() && (
+                                            <button
+                                                className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                                                onClick={() => handleEliminar(p.idPersona)}
+                                            >
+                                                Desactivar
+                                            </button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

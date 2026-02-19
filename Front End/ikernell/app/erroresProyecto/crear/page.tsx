@@ -77,7 +77,7 @@ export default function CrearErrorProyectoPage() {
                     onClick={() => router.push("/erroresProyecto")}
                     className="btn-secondary"
                 >
-                    ← Volver
+                    Volver
                 </button>
             </div>
 

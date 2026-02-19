@@ -79,31 +79,78 @@ export default function ProyectoForm({
     }
 
     return (
-        <form onSubmit={handleSubmit} className="form-container">
-            <input name="nombre" value={form.nombre} placeholder="Nombre" onChange={handleChange} required
-            />
+        <form onSubmit={handleSubmit} className="space-y-6">
 
-            <input
-                name="descripcion" value={form.descripcion} placeholder="Descripción" onChange={handleChange} required
-            />
-
-            <input
-                type="date" name="fechaInicio" value={form.fechaInicio} onChange={handleChange} required
-            />
-
-            <input
-                type="date" name="fechaFin" value={form.fechaFin} onChange={handleChange} required
-            />
-
-            <label>
-                <input type="checkbox" name="estado" checked={form.estado} onChange={handleChange}
+            {/* Nombre */}
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Nombre del proyecto
+                </label>
+                <input
+                    name="nombre"
+                    value={form.nombre}
+                    onChange={handleChange}
+                    required
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
-                Activo
-            </label>
+            </div>
 
-            <button type="submit" className="btn-submit">
-                {mode === "crear" ? "Crear Proyecto" : "Actualizar Proyecto"}
-            </button>
+            {/* Descripción */}
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Descripción
+                </label>
+                <textarea
+                    name="descripcion"
+                    value={form.descripcion}
+                    onChange={handleChange}
+                    required
+                    rows={3}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+            </div>
+
+            {/* Fechas */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Fecha de inicio
+                    </label>
+                    <input
+                        type="date"
+                        name="fechaInicio"
+                        value={form.fechaInicio}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Fecha de finalización
+                    </label>
+                    <input
+                        type="date"
+                        name="fechaFin"
+                        value={form.fechaFin}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                </div>
+            </div>
+
+            {/* Botón */}
+            <div className="pt-4">
+                <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-medium hover:bg-blue-700 transition shadow"
+                >
+                    {mode === "crear" ? "Crear Proyecto" : "Actualizar Proyecto"}
+                </button>
+            </div>
+
         </form>
     );
 }

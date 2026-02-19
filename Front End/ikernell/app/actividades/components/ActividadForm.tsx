@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Etapa } from "@/types/etapa";
-import { Actividad} from "@/types/actividad";
+import { Actividad } from "@/types/actividad";
 import { Persona } from "@/types/persona";
 import { getPersonasAsignables } from "@/services/persona.service";
 import { getEtapas } from "@/services/etapa.service";
@@ -56,17 +56,17 @@ export default function ActividadForm({
                 getPersonasAsignables(),
                 getEtapas()
             ]);
-            
+
             let personasFiltradas = personasData;
-            
+
             // Si es desarrollador, solo puede asignarse actividades a sí mismo
             // y solo si está asignado a un proyecto
             if (isDesarrollador() && usuario) {
-                personasFiltradas = personasData.filter(persona => 
+                personasFiltradas = personasData.filter(persona =>
                     persona.idPersona === usuario.idPersona && persona.proyecto
                 );
             }
-            
+
             setPersonas(personasFiltradas);
             setEtapas(etapasData);
         } catch (error) {
@@ -101,7 +101,7 @@ export default function ActividadForm({
             const url = mode === "crear"
                 ? "http://localhost:8080/api/actividades"
                 : `http://localhost:8080/api/actividades/${initialData?.idActividad}`;
-            
+
             const method = mode === "crear" ? "POST" : "PUT";
 
             const response = await fetch(url, {
@@ -136,77 +136,73 @@ export default function ActividadForm({
                                 No puedes crear actividades
                             </h3>
                             <p className="text-yellow-700 text-sm">
-                                No estás asignado a ningún proyecto actualmente. 
+                                No estás asignado a ningún proyecto actualmente.
                                 Contacta al líder de proyectos para que te asigne a un proyecto.
                             </p>
                         </div>
                     </div>
                 </div>
             ) : (
-                <form onSubmit={handleSubmit} className="form">
-                    <div className="form-grid-2">
-                        <div className="form-field">
-                            <label htmlFor="nombre" className="form-label">
-                                Nombre de la actividad
-                            </label>
-                            <input
-                                type="text"
-                                id="nombre"
-                                name="nombre"
-                                value={form.nombre}
-                                onChange={handleChange}
-                                className="form-input"
-                                required
-                            />
-                        </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
 
-                        <div className="form-field">
-                            <label htmlFor="descripcion" className="form-label">
-                                Descripción
-                            </label>
-                            <input
-                                type="text"
-                                id="descripcion"
-                                name="descripcion"
-                                value={form.descripcion}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Nombre de la actividad
+                        </label>
+                        <input
+                            type="text"
+                            name="nombre"
+                            value={form.nombre}
+                            onChange={handleChange}
+                            required
+                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        />
+                    </div>
 
-                        <div className="form-field">
-                            <label htmlFor="idPersona" className="form-label">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Descripción
+                        </label>
+                        <textarea
+                            name="descripcion"
+                            value={form.descripcion}
+                            onChange={handleChange}
+                            rows={3}
+                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        />
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
                                 Asignar a Persona
                             </label>
                             <select
-                                id="idPersona"
                                 name="idPersona"
                                 value={form.idPersona}
                                 onChange={handleChange}
-                                className="form-select"
                                 required
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             >
                                 <option value="">Seleccione una persona</option>
                                 {personas.map((persona) => (
                                     <option key={persona.idPersona} value={persona.idPersona}>
                                         {persona.nombre} {persona.apellido}
-                                        {isDesarrollador() && persona.idPersona === usuario?.idPersona ? " (Tú)" : ""}
                                     </option>
                                 ))}
                             </select>
                         </div>
 
-                        <div className="form-field">
-                            <label htmlFor="idEtapa" className="form-label">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
                                 Seleccionar Etapa
                             </label>
                             <select
-                                id="idEtapa"
                                 name="idEtapa"
                                 value={form.idEtapa}
                                 onChange={handleChange}
-                                className="form-select"
                                 required
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             >
                                 <option value="">Seleccione una etapa</option>
                                 {etapas.map((etapa) => (
@@ -220,17 +216,18 @@ export default function ActividadForm({
 
                     <button
                         type="submit"
-                        className="btn-primary mt-4"
+                        className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-medium hover:bg-blue-700 transition shadow"
                         disabled={loading}
                     >
                         {loading
                             ? "Guardando..."
                             : mode === "crear"
                                 ? "Crear Actividad"
-                                : "Actualizar Actividad"
-                        }
+                                : "Actualizar Actividad"}
                     </button>
+
                 </form>
+
             )}
         </div>
     );
