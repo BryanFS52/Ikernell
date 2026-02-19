@@ -28,13 +28,7 @@ public class Proyecto {
     private LocalDate fechaFin;
     protected Boolean estado;
 
-    @ManyToMany
-    @JoinTable(
-            name = "persona_proyecto",
-            joinColumns = @JoinColumn(name = "id_proyecto"),
-            inverseJoinColumns = @JoinColumn(name = "id_persona")
-    )
-
+    @ManyToMany(mappedBy = "proyectos")
     private List<Persona> personas = new ArrayList<>();
 
     public String getNombre() {

@@ -69,18 +69,21 @@ public class ProyectoService {
     }
 
     public Proyecto asignarPersona(Long idProyecto, Long idPersona){
+
         Proyecto proyecto = proyectoRepository.findById(idProyecto)
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
         Persona persona = personaRepository.findById(idPersona)
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
 
-        if (proyecto.getPersonas().contains(persona)) {
+        if (persona.getProyectos().contains(proyecto)) {
             throw new RuntimeException("El desarrollador ya está asignado a este proyecto");
         }
 
-        proyecto.getPersonas().add(persona);
-        return proyectoRepository.save(proyecto);
+        persona.getProyectos().add(proyecto);
+
+        personaRepository.save(persona);
+        return proyecto;
     }
 
     public List<Proyecto> obtenerProyectos() {
