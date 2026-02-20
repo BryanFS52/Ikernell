@@ -60,9 +60,9 @@ export default function CrearActividadPage() {
             nombre: form.nombre,
             descripcion: form.descripcion,
             estado: "INICIACION",
-            persona: personaSeleccionada,
-            etapa: etapaSeleccionada,
-            proyecto: personaSeleccionada?.proyecto
+            persona: { idPersona: Number(form.idPersona) },
+            etapa: { idEtapa: Number(form.idEtapa) },
+            proyecto: null // El backend asignará el proyecto basado en la persona
         };
 
         console.log("Persona seleccionada:", personaSeleccionada);
@@ -87,7 +87,7 @@ export default function CrearActividadPage() {
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold">Nueva Actividad</h1>
                 <button
-                    onClick={() => router.push("/proyectos")}
+                    onClick={() => router.push("/actividades")}
                     className="btn-secondary"
                 >
                     Volver

@@ -67,11 +67,67 @@ export default function InterrupcionForm({
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         const { name, value } = e.target;
-        setForm({
-            ...form,
-            [name]: value,
-        });
+
+        if (name === "idPersona") {
+            const nuevaPersonaId = Number(value);
+            let nuevoProyecto = form.idProyecto;
+
+            if (form.idProyecto && value) {
+                const proyectoActual = proyectos.find(p => p.idProyecto === Number(form.idProyecto));
+                const personaEstaAsignada = proyectoActual?.personas?.some(p => p.idPersona === nuevaPersonaId);
+
+                if (!personaEstaAsignada) {
+                    nuevoProyecto = "";
+                }
+            }
+
+            setForm({
+                ...form,
+                [name]: value,
+                idProyecto: nuevoProyecto
+            });
+        }
+        else if (name === "idProyecto") {
+            const nuevoProyectoId = Number(value);
+            let nuevaPersona = form.idPersona;
+
+            if (form.idPersona && value) {
+                const proyectoNuevo = proyectos.find(p => p.idProyecto === nuevoProyectoId);
+                const personaEstaAsignada = proyectoNuevo?.personas?.some(p => p.idPersona === Number(form.idPersona));
+
+                if (!personaEstaAsignada) {
+                    nuevaPersona = "";
+                }
+            }
+
+            setForm({
+                ...form,
+                [name]: value,
+                idPersona: nuevaPersona
+            });
+        }
+        else {
+            setForm({
+                ...form,
+                [name]: value,
+            });
+        }
     }
+
+    const proyectosFiltrados = form.idPersona
+        ? proyectos.filter(proyecto =>
+            proyecto.personas?.some(persona => persona.idPersona === Number(form.idPersona))
+        )
+        : proyectos;
+
+    const personasFiltradas = form.idProyecto
+        ? personas.filter(persona => {
+            if (persona.nombre === "Coordinador" && persona.apellido === "Proyectos") return false;
+
+            const proyecto = proyectos.find(p => p.idProyecto === Number(form.idProyecto));
+            return proyecto?.personas?.some(p => p.idPersona === persona.idPersona);
+        })
+        : personas.filter(p => !(p.nombre === "Coordinador" && p.apellido === "Proyectos"));
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -180,12 +236,17 @@ export default function InterrupcionForm({
                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     >
                         <option value="">Selecciona un responsable</option>
-                        {personas.map(p => (
+                        {personasFiltradas.map(p => (
                             <option key={p.idPersona} value={p.idPersona}>
                                 {p.nombre} {p.apellido}
                             </option>
                         ))}
                     </select>
+                    {form.idProyecto && personasFiltradas.length === 0 && (
+                        <p className="text-sm text-amber-600 mt-1">
+                            No hay personas asignadas a este proyecto
+                        </p>
+                    )}
                 </div>
 
                 <div>
@@ -198,12 +259,17 @@ export default function InterrupcionForm({
                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     >
                         <option value="">Selecciona un proyecto</option>
-                        {proyectos.map(p => (
+                        {proyectosFiltrados.map(p => (
                             <option key={p.idProyecto} value={p.idProyecto}>
                                 {p.nombre}
                             </option>
                         ))}
                     </select>
+                    {form.idPersona && proyectosFiltrados.length === 0 && (
+                        <p className="text-sm text-amber-600 mt-1">
+                            Esta persona no está asignada a ningún proyecto
+                        </p>
+                    )}
                 </div>
             </div>
 

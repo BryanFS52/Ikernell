@@ -60,13 +60,69 @@ export default function ErrorProyectoForm({
         }
     }
 
-    function handleChange(e: any) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         const { name, value } = e.target;
-        setForm({
-            ...form,
-            [name]: value,
-        });
+        
+        if (name === "idPersona") {
+            const nuevaPersonaId = Number(value);
+            let nuevoProyecto = form.idProyecto;
+            
+            if (form.idProyecto && value) {
+                const proyectoActual = proyectos.find(p => p.idProyecto === Number(form.idProyecto));
+                const personaEstaAsignada = proyectoActual?.personas?.some(p => p.idPersona === nuevaPersonaId);
+                
+                if (!personaEstaAsignada) {
+                    nuevoProyecto = "";
+                }
+            }
+            
+            setForm({
+                ...form,
+                [name]: value,
+                idProyecto: nuevoProyecto
+            });
+        }
+        else if (name === "idProyecto") {
+            const nuevoProyectoId = Number(value);
+            let nuevaPersona = form.idPersona;
+            
+            if (form.idPersona && value) {
+                const proyectoNuevo = proyectos.find(p => p.idProyecto === nuevoProyectoId);
+                const personaEstaAsignada = proyectoNuevo?.personas?.some(p => p.idPersona === Number(form.idPersona));
+                
+                if (!personaEstaAsignada) {
+                    nuevaPersona = "";
+                }
+            }
+            
+            setForm({
+                ...form,
+                [name]: value,
+                idPersona: nuevaPersona
+            });
+        }
+        else {
+            setForm({
+                ...form,
+                [name]: value,
+            });
+        }
     }
+
+    const proyectosFiltrados = form.idPersona
+        ? proyectos.filter(proyecto =>
+            proyecto.personas?.some(persona => persona.idPersona === Number(form.idPersona))
+        )
+        : proyectos;
+
+    const personasFiltradas = form.idProyecto
+        ? personas.filter(persona => {
+            if (persona.nombre === "Coordinador" && persona.apellido === "Proyectos") return false;
+            
+            const proyecto = proyectos.find(p => p.idProyecto === Number(form.idProyecto));
+            return proyecto?.personas?.some(p => p.idPersona === persona.idPersona);
+        })
+        : personas.filter(p => !(p.nombre === "Coordinador" && p.apellido === "Proyectos"));
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -123,7 +179,7 @@ export default function ErrorProyectoForm({
             {/* Proyecto y persona */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Proyecto</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Proyecto afectado</label>
                     <select
                         name="idProyecto"
                         value={form.idProyecto}
@@ -131,8 +187,8 @@ export default function ErrorProyectoForm({
                         required
                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     >
-                        <option value="">Selecciona un proyecto</option>
-                        {proyectos.map((proyecto) => (
+                        <option value="">Seleccione el proyecto</option>
+                        {proyectosFiltrados.map((proyecto) => (
                             <option key={proyecto.idProyecto} value={proyecto.idProyecto}>
                                 {proyecto.nombre}
                             </option>
@@ -141,7 +197,7 @@ export default function ErrorProyectoForm({
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Responsable</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Persona responsable</label>
                     <select
                         name="idPersona"
                         value={form.idPersona}
@@ -149,13 +205,23 @@ export default function ErrorProyectoForm({
                         required
                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     >
-                        <option value="">Selecciona una persona</option>
-                        {personas.map((persona) => (
+                        <option value="">Seleccione una persona</option>
+                        {personasFiltradas.map((persona) => (
                             <option key={persona.idPersona} value={persona.idPersona}>
                                 {persona.nombre} {persona.apellido}
                             </option>
                         ))}
                     </select>
+                    {form.idProyecto && personasFiltradas.length === 0 && (
+                        <p className="text-sm text-amber-600 mt-1">
+                            No hay personas asignadas a este proyecto
+                        </p>
+                    )}
+                    {form.idPersona && proyectosFiltrados.length === 0 && (
+                        <p className="text-sm text-amber-600 mt-1">
+                            Esta persona no está asignada a ningún proyecto
+                        </p>
+                    )}
                 </div>
             </div>
 

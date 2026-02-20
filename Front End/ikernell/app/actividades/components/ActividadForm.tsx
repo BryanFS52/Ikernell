@@ -93,9 +93,8 @@ export default function ActividadForm({
                 nombre: form.nombre,
                 descripcion: form.descripcion,
                 estado: "INICIACION",
-                persona: personaSeleccionada,
-                etapa: etapaSeleccionada,
-                proyecto: personaSeleccionada?.proyecto
+                persona: { idPersona: Number(form.idPersona) },
+                etapa: { idEtapa: Number(form.idEtapa) }
             };
 
             const url = mode === "crear"
