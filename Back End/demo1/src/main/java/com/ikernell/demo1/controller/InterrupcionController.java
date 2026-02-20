@@ -38,6 +38,32 @@ public class InterrupcionController {
         return interrupcionService.buscarPorId(id);
     }
 
+    @PutMapping("/{id}")
+    public Interrupcion actualizar(@PathVariable Long id, @RequestBody Interrupcion interrupcionActualizada) {
+        Interrupcion existente = interrupcionService.buscarPorId(id);
+
+        if (existente == null) {
+            throw new RuntimeException("Interrupción no encontrada");
+        }
+
+        Persona persona = personaRepository
+                .findById(interrupcionActualizada.getPersona().getIdPersona())
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+
+        Proyecto proyecto = proyectoRepository
+                .findById(interrupcionActualizada.getProyecto().getIdProyecto())
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+        existente.setTipo(interrupcionActualizada.getTipo());
+        existente.setFecha(interrupcionActualizada.getFecha());
+        existente.setDuracion(interrupcionActualizada.getDuracion());
+        existente.setFase(interrupcionActualizada.getFase());
+        existente.setPersona(persona);
+        existente.setProyecto(proyecto);
+
+        return interrupcionService.guardar(existente);
+    }
+
     @PostMapping
     public Interrupcion guardar(@RequestBody Interrupcion interrupcion){
 

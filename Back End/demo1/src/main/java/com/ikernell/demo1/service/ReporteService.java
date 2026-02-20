@@ -1,9 +1,7 @@
 package com.ikernell.demo1.service;
 import com.ikernell.demo1.dto.ReporteDesempenoDTO;
-import com.ikernell.demo1.entities.Actividad;
 import com.ikernell.demo1.entities.EstadoActividad;
 import com.ikernell.demo1.entities.Persona;
-import com.ikernell.demo1.entities.Proyecto;
 import com.ikernell.demo1.repositories.ActividadRepository;
 import com.ikernell.demo1.repositories.InterrupcionRepository;
 import com.ikernell.demo1.repositories.PersonaRepository;
