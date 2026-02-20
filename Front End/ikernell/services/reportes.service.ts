@@ -82,7 +82,6 @@ export async function getArchivoPlano() {
     return res.json();
 }
 
-// Nueva función específica para empresa brasileña
 export async function getArchivoPlanoOptimizado() {
     try {
         const res = await fetch(`${API_URL}/proyectos`, {
@@ -98,7 +97,6 @@ export async function getArchivoPlanoOptimizado() {
 
         const data = await res.json();
         
-        // Formatear datos para empresa brasileña
         return data.map((proyecto: any) => ({
             ...proyecto,
             fechaFormateada: new Date(proyecto.fechaInicio).toLocaleDateString('pt-BR'),
@@ -111,19 +109,72 @@ export async function getArchivoPlanoOptimizado() {
 }
 
 export async function descargarArchivoPlano() {
-    const res = await fetch(`${API_URL}/proyectos-y-trabajadores/csv`);
+    try {
+        const res = await fetch(`${API_URL}/proyectos-y-trabajadores/csv`);
 
-    if (!res.ok) {
-        throw new Error('Error al descargar el archivo plano');
+        if (!res.ok) {
+            console.warn('Endpoint CSV no disponible, generando desde datos...');
+            return await generarCSVDesdeProyectos();
+        }
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `projetos_brasil_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Error en descarga principal, intentando método alternativo:', error);
+        return await generarCSVDesdeProyectos();
     }
+}
 
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
+export async function generarCSVDesdeProyectos() {
+    try {
+        const proyectos = await getArchivoPlanoOptimizado();
+        
+        if (!proyectos || proyectos.length === 0) {
+            throw new Error('No hay datos de proyectos para exportar');
+        }
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `proyectos_y_trabajadores_${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-    window.URL.revokeObjectURL(url);
+        const headers = 'ID,Projeto,Equipe,Data_Inicio,Data_Fim,Status,Num_Pessoas\n';
+        const csvContent = proyectos.map((p: any) => {
+            const equipe = p.personas ? p.personas.map((per: any) => per.nombre).join(';') : 'Não atribuído';
+            const dataInicio = p.fechaInicio ? new Date(p.fechaInicio).toLocaleDateString('pt-BR') : '';
+            const dataFim = p.fechaFin ? new Date(p.fechaFin).toLocaleDateString('pt-BR') : 'Em andamento';
+            const status = (!p.fechaFin || new Date(p.fechaFin) > new Date()) ? 'Ativo' : 'Finalizado';
+            const numPessoas = p.personas ? p.personas.length : 0;
+            
+            const nomeEscapado = p.nombre?.replace(/"/g, '""') || '';
+            const equipeEscapado = equipe.replace(/"/g, '""');
+            
+            return [
+                p.idProyecto || '',
+                `"${nomeEscapado}"`,
+                `"${equipeEscapado}"`,
+                dataInicio,
+                dataFim,
+                status,
+                numPessoas
+            ].join(',');
+        }).join('\n');
+
+        const csvData = headers + csvContent;
+        const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `projetos_brasil_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        
+        return 'Arquivo CSV gerado com sucesso!';
+    } catch (error) {
+        console.error('Error al generar CSV:', error);
+        throw new Error('Erro ao gerar arquivo CSV: ' + (error instanceof Error ? error.message : 'Erro desconhecido'));
+    }
 }
 

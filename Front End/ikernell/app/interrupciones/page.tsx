@@ -28,18 +28,17 @@ export default function InterrupcionesPage() {
         setLoading(true);
         try {
             const data = await getInterrupciones();
-            
+
             let interrupcionesFiltradas = data || [];
-            
-            // Si es desarrollador, solo mostrar interrupciones de proyectos donde esté asignado
+
             if (isDesarrollador() && usuario) {
-                interrupcionesFiltradas = (data || []).filter(interrupcion => 
-                    interrupcion.proyecto?.personas?.some(persona => 
+                interrupcionesFiltradas = (data || []).filter(interrupcion =>
+                    interrupcion.proyecto?.personas?.some(persona =>
                         persona.idPersona === usuario.idPersona
                     )
                 );
             }
-            
+
             setInterrupciones(interrupcionesFiltradas);
         } catch (error) {
             console.error("Error al cargar interrupciones:", error);

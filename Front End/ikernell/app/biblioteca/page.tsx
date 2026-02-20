@@ -209,18 +209,19 @@ export default function BibliotecaPage() {
                         onClick={() => handleRecursoClick(recurso)}
                         className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer hover:scale-[1.02]"
                     >
-                        <div className="flex justify-between items-start mb-4">
-                            <div className="flex items-center gap-3">
-                                <h3 className="text-xl font-bold text-gray-900">{recurso.titulo}</h3>
+                        {/* Título */}
+                        <div className="mb-3">
+                            <h3 className="text-xl font-bold text-gray-900 mb-2">{recurso.titulo}</h3>
+                            <div className="flex items-center gap-2 flex-wrap">
+                                <span className={`px-2 py-1 rounded-md text-xs font-medium ${getTipoColor(recurso.tipo)}`}>
+                                    {recurso.tipo}
+                                </span>
                                 {recurso.popular && (
-                                    <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
+                                    <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-md font-medium">
                                         Popular
                                     </span>
                                 )}
                             </div>
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTipoColor(recurso.tipo)}`}>
-                                {recurso.tipo}
-                            </span>
                         </div>
 
                         <p className="text-gray-600 mb-4 leading-relaxed">
@@ -244,7 +245,7 @@ export default function BibliotecaPage() {
                         <div className="flex justify-between items-center">
                             {recurso.url ? (
                                 <span className="text-blue-600 text-sm font-medium">
-                                    Acceder al recurso →
+                                    Acceder al recurso
                                 </span>
                             ) : (
                                 <span className="text-gray-500 text-sm">

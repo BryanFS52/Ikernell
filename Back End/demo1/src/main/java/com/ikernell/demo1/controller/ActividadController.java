@@ -1,6 +1,7 @@
 package com.ikernell.demo1.controller;
 import com.ikernell.demo1.entities.Actividad;
 import com.ikernell.demo1.entities.EstadoActividad;
+import com.ikernell.demo1.entities.Persona;
 import com.ikernell.demo1.service.ActividadService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 public class ActividadController {
 
     private final ActividadService actividadService;
+
 
     public ActividadController(ActividadService actividadService){
         this.actividadService = actividadService;

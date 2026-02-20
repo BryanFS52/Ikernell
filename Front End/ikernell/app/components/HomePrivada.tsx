@@ -56,145 +56,158 @@ export default function HomePrivada() {
 
     if (cargando) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
+            <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
                 <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Cargando dashboard...</p>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
+                    <p className="text-slate-300">Cargando dashboard...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Header/Bienvenida */}
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12 shadow-lg">
-                <div className="max-w-7xl mx-auto px-6">
-                    <h1 className="text-4xl font-semibold mb-2 text-shadow-lg">Bienvenido, {usuario?.nombre}</h1>
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-600/20"></div>
+                <div className="max-w-7xl mx-auto px-6 relative z-10">
+                    <h1 className="text-5xl font-bold mb-4 drop-shadow-lg">Bienvenido, {usuario?.nombre}</h1>
+                    <p className="text-xl text-blue-100">Panel de administración - Sistema Ikernell</p>
                 </div>
             </div>
-
-            {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-6 py-8">
-                {/* Servicios de la Empresa */}
-                <section className="bg-white rounded-xl shadow p-8 mb-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Nuestros Servicios</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-3">Desarrollo de Software Personalizado</h3>
-                            <p className="text-gray-600 mb-4">Creamos soluciones de software a medida para satisfacer las necesidades específicas de cada cliente.</p>
-                            <ul className="text-sm text-gray-500 space-y-1">
-                                <li>• Análisis de requerimientos detallado</li>
-                                <li>• Desarrollo ágil con entregas incrementales</li>
-                                <li>• Arquitectura escalable y mantenible</li>
+            <main className="max-w-7xl mx-auto px-6 py-12">
+                <section className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-8 mb-8">
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent mb-8">Nuestros Servicios</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div className="bg-white/5 backdrop-blur border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group shadow-lg">
+                            <h3 className="text-xl font-semibold text-white group-hover:text-blue-300 mb-3 transition-colors">Desarrollo de Software Personalizado</h3>
+                            <p className="text-slate-300 mb-4 leading-relaxed">Creamos soluciones de software a medida para satisfacer las necesidades específicas de cada cliente.</p>
+                            <ul className="text-sm text-slate-400 space-y-2">
+                                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>Análisis de requerimientos detallado</li>
+                                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>Desarrollo ágil con entregas incrementales</li>
+                                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>Arquitectura escalable y mantenible</li>
                             </ul>
                         </div>
                         
-                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-3">Aplicaciones Web Modernas</h3>
-                            <p className="text-gray-600 mb-4">Desarrollamos aplicaciones web responsivas e intuitivas utilizando las tecnologías más actuales.</p>
-                            <ul className="text-sm text-gray-500 space-y-1">
-                                <li>• Diseño responsivo para todos los dispositivos</li>
-                                <li>• Interfaz de usuario moderna</li>
-                                <li>• Optimización SEO incluida</li>
+                        {/* SERVICIO 2 */}
+                        <div className="bg-white/5 backdrop-blur border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group shadow-lg">
+                            <h3 className="text-xl font-semibold text-white group-hover:text-blue-300 mb-3 transition-colors">Aplicaciones Web Modernas</h3>
+                            <p className="text-slate-300 mb-4 leading-relaxed">Desarrollamos aplicaciones web responsivas e intuitivas utilizando las tecnologías más actuales.</p>
+                            <ul className="text-sm text-slate-400 space-y-2">
+                                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>Diseño responsivo para todos los dispositivos</li>
+                                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>Interfaz de usuario moderna</li>
+                                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>Optimización SEO incluida</li>
                             </ul>
                         </div>
                         
-                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-3">Consultoría Tecnológica</h3>
-                            <p className="text-gray-600 mb-4">Asesoramos en la adopción de nuevas tecnologías y optimización de procesos existentes.</p>
-                            <ul className="text-sm text-gray-500 space-y-1">
-                                <li>• Auditoría de sistemas actuales</li>
-                                <li>• Planificación de arquitectura</li>
-                                <li>• Capacitación del personal técnico</li>
+                        {/* SERVICIO 3*/}
+                        <div className="bg-white/5 backdrop-blur border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group shadow-lg">
+                            <h3 className="text-xl font-semibold text-white group-hover:text-blue-300 mb-3 transition-colors">Consultoría Tecnológica</h3>
+                            <p className="text-slate-300 mb-4 leading-relaxed">Asesoramos en la adopción de nuevas tecnologías y optimización de procesos existentes.</p>
+                            <ul className="text-sm text-slate-400 space-y-2">
+                                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>Auditoría de sistemas actuales</li>
+                                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>Planificación de arquitectura</li>
+                                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>Capacitación del personal técnico</li>
                             </ul>
                         </div>
                     </div>
                     <div className="text-center">
-                        <Link href="/servicios" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition font-medium">
+                        <Link href="/servicios" className="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-xl transition-all duration-200 font-semibold shadow-lg hover:shadow-blue-500/25 transform hover:scale-105">
                             Ver Todos los Servicios
                         </Link>
                     </div>
                 </section>
 
-                {/* Información Empresarial */}
-                <section className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-8 mb-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Información Empresarial</h2>
+                {/* SECCIÓN INFO EMPRESARIAL */}
+                <section className="bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-md rounded-2xl border border-white/10 shadow-2xl p-8 mb-8">
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent mb-8">Información Empresarial</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <Link href="/lineamientos" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600">Lineamientos</h3>
-                            <p className="text-gray-600 text-sm">Misión, visión, valores y políticas corporativas</p>
+                        <Link href="/lineamientos" className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-6 hover:bg-white/15 hover:border-white/30 transition-all duration-300 group shadow-lg">
+                            <h3 className="text-lg font-semibold text-white mb-3 group-hover:text-blue-300 transition-colors">Lineamientos</h3>
+                            <p className="text-slate-300 text-sm leading-relaxed">Misión, visión, valores y políticas corporativas</p>
                         </Link>
                         
-                        <Link href="/servicios" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600">Portafolio</h3>
-                            <p className="text-gray-600 text-sm">Servicios y soluciones que ofrecemos</p>
+                        <Link href="/servicios" className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-6 hover:bg-white/15 hover:border-white/30 transition-all duration-300 group shadow-lg">
+                            <h3 className="text-lg font-semibold text-white mb-3 group-hover:text-blue-300 transition-colors">Portafolio</h3>
+                            <p className="text-slate-300 text-sm leading-relaxed">Servicios y soluciones que ofrecemos</p>
                         </Link>
                         
-                        <Link href="/sitios-interes" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600">Sitios de Interés</h3>
-                            <p className="text-gray-600 text-sm">Enlaces útiles y recursos recomendados</p>
+                        <Link href="/sitios-interes" className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-6 hover:bg-white/15 hover:border-white/30 transition-all duration-300 group shadow-lg">
+                            <h3 className="text-lg font-semibold text-white mb-3 group-hover:text-blue-300 transition-colors">Sitios de Interés</h3>
+                            <p className="text-slate-300 text-sm leading-relaxed">Enlaces útiles y recursos recomendados</p>
                         </Link>
                         
-                        <Link href="/contacto" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600">Contacto</h3>
-                            <p className="text-gray-600 text-sm">Información de contacto y ubicación</p>
+                        <Link href="/contacto" className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-6 hover:bg-white/15 hover:border-white/30 transition-all duration-300 group shadow-lg">
+                            <h3 className="text-lg font-semibold text-white mb-3 group-hover:text-blue-300 transition-colors">Contacto</h3>
+                            <p className="text-slate-300 text-sm leading-relaxed">Información de contacto y ubicación</p>
                         </Link>
                     </div>
                 </section>
 
-                {/* Noticias */}
-                <section className="bg-white rounded-xl shadow p-6 mb-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Noticias</h2>
+                {/* SECCIÓN NOTICIAS */}
+                <section className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-8 mb-8">
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent mb-6">Noticias</h2>
                     {usuario?.rol.nombre === 'Coordinador de Proyectos' && (
-                        <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <div className="mb-8 p-6 bg-blue-500/10 backdrop-blur rounded-xl border border-blue-400/30 shadow-lg">
                             {errorNoticia && (
-                                <div className="mb-3 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">{errorNoticia}</div>
+                                <div className="mb-4 p-4 bg-red-500/10 backdrop-blur border border-red-400/30 text-red-300 rounded-xl text-sm shadow-lg">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-red-400">⚠</span>
+                                        {errorNoticia}
+                                    </div>
+                                </div>
                             )}
                             <textarea
                                 value={newNoticia}
                                 onChange={(e) => setNewNoticia(e.target.value)}
                                 placeholder="Escribe una noticia importante para el equipo..."
-                                className="w-full p-3 border border-blue-300 rounded resize-none focus:outline-none focus:border-blue-500 text-sm"
+                                className="w-full p-4 bg-white/20 backdrop-blur border border-white/30 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent transition-all text-white placeholder-slate-300 shadow-lg"
                                 rows={3}
                                 disabled={creandoNoticia}
                             />
                             <button
                                 onClick={agregarNoticia}
                                 disabled={creandoNoticia || !newNoticia.trim()}
-                                className={`mt-3 px-4 py-2 rounded-lg transition font-medium ${creandoNoticia || !newNoticia.trim()
-                                    ? 'bg-gray-400 text-white cursor-not-allowed'
-                                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                                className={`mt-4 px-6 py-3 rounded-xl transition-all duration-200 font-semibold shadow-lg transform ${creandoNoticia || !newNoticia.trim()
+                                    ? 'bg-gray-500/50 text-slate-400 cursor-not-allowed'
+                                    : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white hover:scale-105 hover:shadow-blue-500/25'
                                     }`}
                             >
-                                {creandoNoticia ? 'Publicando...' : 'Publicar Noticia'}
+                                {creandoNoticia ? (
+                                    <span className="flex items-center gap-2">
+                                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                        </svg>
+                                        Publicando...
+                                    </span>
+                                ) : 'Publicar Noticia'}
                             </button>
                         </div>
                     )}
-                    {/* Listado de Noticias */}
                     <div className="space-y-4">
                         {noticias.map((noticia) => (
-                            <div key={noticia.idNoticia} className="p-4 border rounded-lg hover:bg-gray-50 transition">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-semibold text-gray-800">{noticia.titulo}</h3>
-                                    <span className="text-xs text-gray-500">{new Date(noticia.fecha).toLocaleDateString('es-ES')}</span>
+                            <div key={noticia.idNoticia} className="p-6 bg-white/5 backdrop-blur border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 shadow-lg group">
+                                <div className="flex justify-between items-start mb-3">
+                                    <h3 className="font-semibold text-white group-hover:text-blue-300 transition-colors text-lg">{noticia.titulo}</h3>
+                                    <span className="text-sm text-blue-300 bg-blue-500/20 px-3 py-1 rounded-full whitespace-nowrap">
+                                        {new Date(noticia.fecha).toLocaleDateString('es-ES')}
+                                    </span>
                                 </div>
-                                <p className="text-gray-600 text-sm">{noticia.contenido}</p>
+                                <p className="text-slate-300 leading-relaxed">{noticia.contenido}</p>
                             </div>
                         ))}
                     </div>
                 </section>
 
-                {/* Preguntas */}
-                <section className="bg-white rounded-xl shadow p-6">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Preguntas</h2>
+                {/* SECCIÓN PREGUNTAS */}
+                <section className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-8 mb-8">
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent mb-6">Preguntas</h2>
                     <SeccionPreguntas preguntas={preguntas.slice(0, 5)} esAutenticado={true} usuarioId={usuario?.idPersona} onRespuestaExitosa={cargarDatos} />
                 </section>
             </main>
 
-            {/* Footer */}
-            <footer className="mt-16 bg-gray-100 border-t text-center py-6 text-gray-600">
-                <p>&copy; 2026 Ikernell. Sistema de Gestión Empresarial.</p>
+            <footer className="mt-12 bg-slate-800/50 backdrop-blur border-t border-white/10 text-center py-8">
+                <p className="text-slate-400">&copy; 2026 Ikernell. Sistema de Gestión Empresarial.</p>
             </footer>
         </div>
     );
