@@ -36,6 +36,11 @@ public class PersonaController {
         return personaService.listarParaAsignacionProyecto();
     }
 
+    @PostMapping(consumes = "application/json")
+    public Persona guardarJson(@RequestBody Persona persona){
+        return personaService.guardar(persona);
+    }
+
     @PostMapping(consumes = "multipart/form-data")
     public Persona guardar(
             @RequestParam String nombre,
@@ -44,6 +49,7 @@ public class PersonaController {
             @RequestParam(required = false) String direccion,
             @RequestParam(required = false) String profesion,
             @RequestParam(required = false) String especialidad,
+            @RequestParam(required = false) String correo,
             @RequestParam String idRol,
             @RequestParam(required = false) String password,
             @RequestParam(required = false) MultipartFile foto
@@ -56,6 +62,7 @@ public class PersonaController {
                 direccion,
                 profesion,
                 especialidad,
+                correo,
                 idRol,
                 password,
                 foto
@@ -82,11 +89,12 @@ public class PersonaController {
             @RequestParam(required = false) String direccion,
             @RequestParam(required = false) String profesion,
             @RequestParam(required = false) String especialidad,
+            @RequestParam(required = false) String correo,
             @RequestParam String idRol,
             @RequestParam(required = false) String password,
             @RequestParam(required = false) MultipartFile foto
     ) throws Exception {
-        return personaService.actualizarConFoto(id, nombre, apellido, documento, direccion, profesion, especialidad, idRol, password, foto);
+        return personaService.actualizarConFoto(id, nombre, apellido, documento, direccion, profesion, especialidad, correo, idRol, password, foto);
     }
 
     @PutMapping("/desactivar/{id}")
@@ -98,5 +106,13 @@ public class PersonaController {
     public void reactivar(@PathVariable Long id){
         personaService.reactivar(id);
     }
+
+    @PutMapping("/{id}/proyectos")
+    public Persona actualizarProyectos(
+            @PathVariable Long id,
+            @RequestBody List<Long> idsProyectos){
+        return personaService.actualizarProyectos(id, idsProyectos);
+    }
 }
+
 

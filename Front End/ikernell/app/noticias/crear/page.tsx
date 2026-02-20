@@ -1,52 +1,40 @@
 "use client";
 
-import { useState } from "react";
-import { crearNoticia } from "@/services/noticia.service";
 import { useRouter } from "next/navigation";
+import { usePermissions } from "@/hooks/usePermissions";
+import NoticiaForm from "../components/NoticiaForm";
 
 export default function CrearNoticiaPage() {
-    const [titulo, setTitulo] = useState("");
-    const [contenido, setContenido] = useState("");
     const router = useRouter();
+    const { canCreateNews } = usePermissions();
 
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
-        if (!titulo || !contenido) {
-            alert("Complete los campos");
-            return;
-        }
-
-        try {
-            await crearNoticia({ titulo, contenido });
-            alert("Noticia creada correctamente");
-            router.push("/noticias");
-        } catch (error) {
-            console.error(error);
-            alert("Error al crear noticia");
-        }
+    // Verificar permisos para crear noticias
+    if (!canCreateNews()) {
+        return (
+            <div className="max-w-6xl mx-auto p-6">
+                <h1 className="text-2xl font-bold text-red-600">Acceso Denegado</h1>
+                <p className="mt-4">No tienes permisos para crear noticias.</p>
+            </div>
+        );
     }
 
     return (
-        <div className="page max-w-xl mx-auto p-6">
-            <h1 className="text-2xl font-bold mb-4">Crear Noticia</h1>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <input
-                    type="text"
-                    placeholder="Título"
-                    value={titulo}
-                    onChange={(e) => setTitulo(e.target.value)}
-                    className="input"
-                    required
-                />
-                <textarea
-                    placeholder="Contenido"
-                    value={contenido}
-                    onChange={(e) => setContenido(e.target.value)}
-                    className="input"
-                    required
-                />
-                <button type="submit" className="btn-primary">Crear</button>
-            </form>
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+            <div className="max-w-2xl mx-auto">
+                <div className="flex justify-between items-center mb-8">
+                    <h1 className="text-3xl font-bold text-gray-900">Crear Noticia</h1>
+                    <button
+                        onClick={() => router.push("/noticias")}
+                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow"
+                    >
+                        Volver
+                    </button>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-lg p-8">
+                    <NoticiaForm mode="crear" />
+                </div>
+            </div>
         </div>
     );
 }

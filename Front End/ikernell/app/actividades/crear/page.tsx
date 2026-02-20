@@ -84,7 +84,16 @@ export default function CrearActividadPage() {
 
     return (
         <div className="page">
-            <h1 className="text-2xl font-bold mb-4">Nueva Actividad</h1>
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-2xl font-bold">Nueva Actividad</h1>
+                <button
+                    onClick={() => router.push("/proyectos")}
+                    className="btn-secondary"
+                >
+                    Volver
+                </button>
+            </div>
+            
 
             <form onSubmit={handleSubmit} className="form">
                 <div className="form-grid-2">

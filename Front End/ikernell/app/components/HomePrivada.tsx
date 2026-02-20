@@ -9,7 +9,7 @@ import { SeccionPreguntas } from '@/app/components/SeccionPreguntas';
 import { Noticia } from '@/types/noticia';
 import { Pregunta } from '@/types/pregunta';
 
-export function HomePrivada() {
+export default function HomePrivada() {
     const { usuario } = useAuth();
     const [noticias, setNoticias] = useState<Noticia[]>([]);
     const [preguntas, setPreguntas] = useState<Pregunta[]>([]);
@@ -71,35 +71,79 @@ export function HomePrivada() {
             <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12 shadow-lg">
                 <div className="max-w-7xl mx-auto px-6">
                     <h1 className="text-4xl font-semibold mb-2 text-shadow-lg">Bienvenido, {usuario?.nombre}</h1>
-                    <p className="text-blue-100 text-lg">Dashboard de gestión • {usuario?.rol.nombre}</p>
                 </div>
             </div>
 
             {/* Main Content */}
             <main className="max-w-7xl mx-auto px-6 py-8">
-                {/* Tarjetas de Acceso Rápido */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    {[
-                        { titulo: 'Proyectos', color: 'from-blue-500 to-blue-600', link: '/proyectos' },
-                        { titulo: 'Personas', color: 'from-green-500 to-green-600', link: '/personas' },
-                        { titulo: 'Actividades', color: 'from-purple-500 to-purple-600', link: '/actividades' },
-                        { titulo: 'Error en Proyectos', color: 'from-red-500 to-red-600', link: '/erroresProyecto' },
-                        { titulo: 'Interrupciones en proyectos', color: 'from-yellow-500 to-yellow-600', link: '/interrupciones' },
-                        { titulo: 'Reportes', color: 'from-orange-500 to-orange-600', link: '/reportes' },
-                        { titulo: 'Noticias', color: 'from-purple-500 to-purple-600', link: '/noticias' },
-                        { titulo: 'Preguntas', color: 'from-purple-500 to-purple-600', link: '/preguntas' }
-                    ].map((item, idx) => (
-                        <Link
-                            key={idx}
-                            href={item.link}
-                            className={`bg-gradient-to-br ${item.color} rounded-xl p-6 text-white shadow-md hover:scale-105 transition cursor-pointer`}
-                        >
-                            <h3 className="font-semibold text-lg">{item.titulo}</h3>
+                {/* Servicios de la Empresa */}
+                <section className="bg-white rounded-xl shadow p-8 mb-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Nuestros Servicios</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-3">Desarrollo de Software Personalizado</h3>
+                            <p className="text-gray-600 mb-4">Creamos soluciones de software a medida para satisfacer las necesidades específicas de cada cliente.</p>
+                            <ul className="text-sm text-gray-500 space-y-1">
+                                <li>• Análisis de requerimientos detallado</li>
+                                <li>• Desarrollo ágil con entregas incrementales</li>
+                                <li>• Arquitectura escalable y mantenible</li>
+                            </ul>
+                        </div>
+                        
+                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-3">Aplicaciones Web Modernas</h3>
+                            <p className="text-gray-600 mb-4">Desarrollamos aplicaciones web responsivas e intuitivas utilizando las tecnologías más actuales.</p>
+                            <ul className="text-sm text-gray-500 space-y-1">
+                                <li>• Diseño responsivo para todos los dispositivos</li>
+                                <li>• Interfaz de usuario moderna</li>
+                                <li>• Optimización SEO incluida</li>
+                            </ul>
+                        </div>
+                        
+                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-3">Consultoría Tecnológica</h3>
+                            <p className="text-gray-600 mb-4">Asesoramos en la adopción de nuevas tecnologías y optimización de procesos existentes.</p>
+                            <ul className="text-sm text-gray-500 space-y-1">
+                                <li>• Auditoría de sistemas actuales</li>
+                                <li>• Planificación de arquitectura</li>
+                                <li>• Capacitación del personal técnico</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="text-center">
+                        <Link href="/servicios" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition font-medium">
+                            Ver Todos los Servicios
                         </Link>
-                    ))}
-                </div>
+                    </div>
+                </section>
 
-                {/* Noticias - Columna Izquierda/Ancha */}
+                {/* Información Empresarial */}
+                <section className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-8 mb-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Información Empresarial</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <Link href="/lineamientos" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600">Lineamientos</h3>
+                            <p className="text-gray-600 text-sm">Misión, visión, valores y políticas corporativas</p>
+                        </Link>
+                        
+                        <Link href="/servicios" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600">Portafolio</h3>
+                            <p className="text-gray-600 text-sm">Servicios y soluciones que ofrecemos</p>
+                        </Link>
+                        
+                        <Link href="/sitios-interes" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600">Sitios de Interés</h3>
+                            <p className="text-gray-600 text-sm">Enlaces útiles y recursos recomendados</p>
+                        </Link>
+                        
+                        <Link href="/contacto" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600">Contacto</h3>
+                            <p className="text-gray-600 text-sm">Información de contacto y ubicación</p>
+                        </Link>
+                    </div>
+                </section>
+
+                {/* Noticias */}
                 <section className="bg-white rounded-xl shadow p-6 mb-8">
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">Noticias</h2>
                     {usuario?.rol.nombre === 'Coordinador de Proyectos' && (

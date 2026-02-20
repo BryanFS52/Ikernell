@@ -1,6 +1,6 @@
 # Mejoras a la Interfaz Principal - Sistema de Gestión Ikernell
 
-## 📋 Resumen de Cambios
+## Resumen de Cambios
 
 Se ha mejorado significativamente la página de inicio del proyecto para permitir que:
 
@@ -10,9 +10,9 @@ Se ha mejorado significativamente la página de inicio del proyecto para permiti
 
 ---
 
-## 🎨 Características Nuevas
+## Características Nuevas
 
-### 1. **Página Pública para Visitantes Anónimos** ✅
+### 1. **Página Pública para Visitantes Anónimos**
 
 **Ruta:** `/` (cuando no está autenticado)
 
@@ -34,7 +34,7 @@ Incluye:
 
 ---
 
-### 2. **Dashboard Privado para Usuarios Autenticados** ✅
+### 2. **Dashboard Privado para Usuarios Autenticados**
 
 **Ruta:** `/` (cuando está autenticado)
 
@@ -43,10 +43,10 @@ Incluye:
 - Rol actual
 
 **Tarjetas de Acceso Rápido:**
-- 📊 Proyectos
-- 👥 Personas
-- 🎯 Actividades
-- 📋 Reportes
+- Proyectos
+- Personas
+- Actividades
+- Reportes
 
 **Secciones Principales:**
 
@@ -67,19 +67,19 @@ Incluye:
 
 ---
 
-### 3. **Sistema de Preguntas y Respuestas (Q&A)** ✅
+### 3. **Sistema de Preguntas y Respuestas (Q&A)**
 
 #### **Para Visitantes Anónimos:**
-- ✅ Hacer preguntas sin autenticación
-- ✅ Ver preguntas existentes
-- ✅ Leer respuestas de la empresa
-- ❌ Responder (solo personal autenticado)
+- Hacer preguntas sin autenticación
+- Ver preguntas existentes
+- Leer respuestas de la empresa
+- No pueden responder (solo personal autenticado)
 
 #### **Para Personal Autenticado:**
-- ✅ Ver todas las preguntas
-- ✅ Responder directamente
-- ✅ Filtrar por estado (Abierta, Respondida, Cerrada)
-- ✅ Página dedicada: `/preguntas`
+- Ver todas las preguntas
+- Responder directamente
+- Filtrar por estado (Abierta, Respondida, Cerrada)
+- Página dedicada: `/preguntas`
 
 **Página de Preguntas Dedicada:**
 
@@ -133,7 +133,7 @@ Incluye:
 
 ---
 
-## 🔧 API Endpoints Requeridos en Backend
+## API Endpoints Requeridos en Backend
 
 ### **Preguntas**
 
@@ -178,7 +178,7 @@ Incluye:
 
 ---
 
-## 🎯 Flujos de Usuario
+## Flujos de Usuario
 
 ### **Visitante Anónimo:**
 
@@ -234,7 +234,7 @@ Incluye:
 
 ---
 
-## 🎨 Estilos y Diseño
+## Estilos y Diseño
 
 ### **HomePublica:**
 - Tema oscuro profesional (gradientes azules/púrpura)
@@ -256,32 +256,32 @@ Incluye:
 
 ---
 
-## 🔐 Control de Acceso
+## Control de Acceso
 
 **Visitantes:**
 - Ver noticias
 - Hacer preguntas
 - Ver preguntas/respuestas
-- ❌ Responder preguntas
-- ❌ Acceso a módulos privados
+- No pueden responder preguntas
+- No tienen acceso a módulos privados
 
 **Coordinador de Proyectos:**
-- ✅ Todo de visitante
-- ✅ Publicar noticias
-- ✅ Responder preguntas
-- ✅ Crear usuarios
-- ✅ Crear proyectos
-- ✅ Ver reportes
+- Todo de visitante
+- Publicar noticias
+- Responder preguntas
+- Crear usuarios
+- Crear proyectos
+- Ver reportes
 
 **Otros Roles:**
-- ✅ Ver noticias
-- ✅ Responder preguntas
-- ✅ Ver preguntas
-- ✅ Funciones según su rol
+- Ver noticias
+- Responder preguntas
+- Ver preguntas
+- Funciones según su rol
 
 ---
 
-## 🚀 Implementación
+## Implementación
 
 ### **Paso 1: Backend**
 Implementar los endpoints de `/api/preguntas`
@@ -302,17 +302,17 @@ Implementar los endpoints de `/api/preguntas`
 
 ---
 
-## 📱 Responsive Design
+## Responsive Design
 
-✅ Mobile (< 640px)
-✅ Tablet (640px - 1024px)
-✅ Desktop (> 1024px)
+Mobile (< 640px)
+Tablet (640px - 1024px)
+Desktop (> 1024px)
 
 Todos los componentes son totalmente responsive.
 
 ---
 
-## ⚙️ Configuración Requerida
+## Configuración Requerida
 
 En tu base de datos, asegúrate de tener:
 

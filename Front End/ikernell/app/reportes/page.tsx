@@ -1,9 +1,21 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { usePermissions } from "@/hooks/usePermissions";
 
 export default function ReportesPage() {
     const router = useRouter();
+    const { canViewReports } = usePermissions();
+
+    // Verificar permisos para ver reportes
+    if (!canViewReports()) {
+        return (
+            <div className="page">
+                <h1 className="text-2xl font-bold text-red-600">Acceso Denegado</h1>
+                <p className="mt-4">No tienes permisos para ver esta página.</p>
+            </div>
+        );
+    }
 
     return (
         <div className="page">

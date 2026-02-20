@@ -9,7 +9,7 @@ import { SeccionPreguntas } from '@/app/components/SeccionPreguntas';
 import { Noticia } from '@/types/noticia';
 import { Pregunta } from '@/types/pregunta';
 
-export function HomePublica() {
+export default function HomePublica() {
     const [noticias, setNoticias] = useState<Noticia[]>([]);
     const [preguntas, setPreguntas] = useState<Pregunta[]>([]);
     const [cargandoNoticias, setCargandoNoticias] = useState(true);
@@ -46,9 +46,9 @@ export function HomePublica() {
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
             {/* Hero Section */}
             <section className="relative px-6 py-20 text-white overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700">
-                <div className="absolute inset-0 opacity-30 bg-cover bg-center" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}></div>
                 <div className="relative z-10 max-w-6xl mx-auto text-center">
                     <h1 className="text-5xl md:text-6xl font-bold mb-4">Bienvenido a Ikernell</h1>
+                    <p className="text-xl md:text-2xl mb-8 text-blue-100">Transformamos ideas en soluciones digitales</p>
                     <div className="flex gap-4 justify-center">
                         <Link href="/login" className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium shadow-lg">
                             Iniciar Sesión
@@ -56,6 +56,86 @@ export function HomePublica() {
                         <button onClick={() => document.getElementById('preguntas')?.scrollIntoView({ behavior: 'smooth' })} className="px-8 py-3 border-2 border-blue-300 text-blue-100 rounded-lg hover:bg-blue-900/50 transition font-medium">
                             Ver Preguntas
                         </button>
+                    </div>
+                </div>
+            </section>
+
+            {/* Servicios Section */}
+            <section className="px-6 py-16 bg-white">
+                <div className="max-w-6xl mx-auto">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-bold text-gray-900 mb-4">Nuestros Servicios</h2>
+                        <p className="text-xl text-gray-600">Soluciones tecnológicas integrales para hacer crecer su negocio</p>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="text-center p-6 border border-gray-200 rounded-xl hover:shadow-lg transition">
+                            <h3 className="text-xl font-semibold text-gray-900 mb-4">Desarrollo de Software</h3>
+                            <p className="text-gray-600 mb-4">Creamos soluciones de software personalizadas que se adaptan perfectamente a las necesidades de su empresa.</p>
+                            <ul className="text-sm text-gray-500 space-y-2">
+                                <li>Aplicaciones web modernas</li>
+                                <li>Sistemas de gestión empresarial</li>
+                                <li>APIs y microservicios</li>
+                            </ul>
+                        </div>
+                        
+                        <div className="text-center p-6 border border-gray-200 rounded-xl hover:shadow-lg transition">
+                            <h3 className="text-xl font-semibold text-gray-900 mb-4">Aplicaciones Móviles</h3>
+                            <p className="text-gray-600 mb-4">Desarrollamos aplicaciones nativas y multiplataforma para iOS y Android que conectan su negocio con sus clientes.</p>
+                            <ul className="text-sm text-gray-500 space-y-2">
+                                <li>Apps nativas para iOS y Android</li>
+                                <li>Aplicaciones híbridas</li>
+                                <li>Sincronización con backend</li>
+                            </ul>
+                        </div>
+                        
+                        <div className="text-center p-6 border border-gray-200 rounded-xl hover:shadow-lg transition">
+                            <h3 className="text-xl font-semibold text-gray-900 mb-4">Consultoría Tecnológica</h3>
+                            <p className="text-gray-600 mb-4">Asesoramos en la adopción de nuevas tecnologías y optimización de procesos tecnológicos existentes.</p>
+                            <ul className="text-sm text-gray-500 space-y-2">
+                                <li>Auditoría de sistemas</li>
+                                <li>Planificación tecnológica</li>
+                                <li>Migración de sistemas</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div className="text-center mt-10">
+                        <Link href="/servicios" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition font-medium shadow-lg">
+                            Ver Todos los Servicios
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* Información Empresarial */}
+            <section className="px-6 py-16 bg-gray-50">
+                <div className="max-w-6xl mx-auto">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-bold text-gray-900 mb-4">Información Empresarial</h2>
+                        <p className="text-xl text-gray-600">Conozca más sobre Ikernell y nuestro compromiso con la excelencia</p>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <Link href="/lineamientos" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group text-center">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-600">Lineamientos</h3>
+                            <p className="text-gray-600 text-sm">Misión, visión y valores corporativos</p>
+                        </Link>
+                        
+                        <Link href="/servicios" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group text-center">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-600">Portafolio</h3>
+                            <p className="text-gray-600 text-sm">Servicios y soluciones completas</p>
+                        </Link>
+                        
+                        <Link href="/sitios-interes" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group text-center">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-600">Sitios de Interés</h3>
+                            <p className="text-gray-600 text-sm">Enlaces útiles y recursos</p>
+                        </Link>
+                        
+                        <Link href="/contacto" className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition group text-center">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-600">Contacto</h3>
+                            <p className="text-gray-600 text-sm">Información y ubicación</p>
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -99,12 +179,11 @@ export function HomePublica() {
                         <FormularioPreguntaPublica onSuccess={cargarPreguntas} />
                     </div>
                 </div>
-            </section>
 
-            {/* Footer */}
-            <footer className="mt-16 bg-gray-100 border-t text-center py-6 text-gray-600">
+                <footer className="mt-16 text-center py-6 text-bray-600">
                 <p>&copy; 2026 Ikernell. Sistema de Gestión Empresarial.</p>
             </footer>
+            </section>
         </div>
     );
 }

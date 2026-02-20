@@ -4,12 +4,21 @@ import { useEffect, useState } from "react";
 import { Interrupcion } from "@/types/interrupcion";
 import { getInterrupciones, eliminarInterrupcion } from "@/services/interrupcion.service";
 import { useRouter } from "next/navigation";
+import { usePermissions } from "@/hooks/usePermissions";
+import { ConditionalRender } from "@/components/ConditionalRender";
+import { useAuth } from "@/app/context/AuthContext";
 
 
 export default function InterrupcionesPage() {
     const [interrupciones, setInterrupciones] = useState<Interrupcion[]>([]);
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+    const { usuario } = useAuth();
+    const {
+        canRegisterInterruptions,
+        canViewAllInterruptions,
+        isDesarrollador
+    } = usePermissions();
 
     useEffect(() => {
         cargarInterrupciones();
@@ -19,7 +28,19 @@ export default function InterrupcionesPage() {
         setLoading(true);
         try {
             const data = await getInterrupciones();
-            setInterrupciones(data || []);
+            
+            let interrupcionesFiltradas = data || [];
+            
+            // Si es desarrollador, solo mostrar interrupciones de proyectos donde esté asignado
+            if (isDesarrollador() && usuario) {
+                interrupcionesFiltradas = (data || []).filter(interrupcion => 
+                    interrupcion.proyecto?.personas?.some(persona => 
+                        persona.idPersona === usuario.idPersona
+                    )
+                );
+            }
+            
+            setInterrupciones(interrupcionesFiltradas);
         } catch (error) {
             console.error("Error al cargar interrupciones:", error);
             setInterrupciones([]);
@@ -43,67 +64,76 @@ export default function InterrupcionesPage() {
     }
 
     if (loading) {
-        return <p className="text-center mt-10">Cargando interrupciones</p>;
+        return <p className="text-center mt-10">Cargando interrupciones...</p>;
     }
 
     return (
-        <div className="page">
-            <div className="flex justify-between items-center mb-4">
+        <div className="max-w-6xl mx-auto p-6">
+
+            {/* Header */}
+            <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Interrupciones</h1>
 
-                <div className="flex items-center space-x-4">
-                    <button
-                        onClick={() => router.push("/interrupciones/crear")}
-                        className="btn-primary"
-                    >
-                        Nueva Interrupción
-                    </button>
+                <div className="flex gap-2">
+                    <ConditionalRender condition={canRegisterInterruptions()}>
+                        <button
+                            onClick={() => router.push("/interrupciones/crear")}
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                        >
+                            Nueva Interrupción
+                        </button>
+                    </ConditionalRender>
                 </div>
             </div>
 
-            <div className="table-container">
-                <table className="custom-table">
-                    <thead>
+            {/* Tabla */}
+            <div className="bg-white rounded-xl shadow border overflow-x-auto">
+                <table className="min-w-full text-sm text-left">
+                    <thead className="bg-blue-900 text-white uppercase text-xs">
                         <tr>
-                            <th>Tipo</th>
-                            <th>Fecha</th>
-                            <th>Duracion</th>
-                            <th>Fase</th>
-                            <th>Responsable</th>
-                            <th>Proyecto</th>
-                            <th className="text-center">Acciones</th>
+                            <th className="px-6 py-3">Tipo</th>
+                            <th className="px-6 py-3">Fecha</th>
+                            <th className="px-6 py-3">Duración</th>
+                            <th className="px-6 py-3">Fase</th>
+                            <th className="px-6 py-3">Responsable</th>
+                            <th className="px-6 py-3">Proyecto</th>
+                            <th className="px-6 py-3 text-center">Acciones</th>
                         </tr>
                     </thead>
-
-                    <tbody>
+                    <tbody className="divide-y">
                         {interrupciones.length === 0 ? (
                             <tr>
-                                <td colSpan={7} className="text-center py-4">
+                                <td colSpan={7} className="text-center py-6 text-gray-500">
                                     No se encontraron interrupciones
                                 </td>
                             </tr>
                         ) : (
                             interrupciones.map((i) => (
-                                <tr key={i.idInterrupcion}>
-                                    <td>{i.tipo}</td>
-                                    <td>{new Date(i.fecha).toLocaleDateString()}</td>
-                                    <td>{i.duracion}</td>
-                                    <td>{i.fase}</td>
-                                    <td>{i.persona ? `${i.persona.nombre} ${i.persona.apellido}` : 'Sin nombre'}</td>
-                                    <td>{i.proyecto ? i.proyecto.nombre : 'No asignado'}</td>
-                                    <td className="actions">
-                                        <button
-                                            className="btn-edit"
-                                            onClick={() => handleEditar(i.idInterrupcion)}
-                                        >
-                                            Editar
-                                        </button>
-                                        <button
-                                            className="btn-delete"
-                                            onClick={() => handleEliminar(i.idInterrupcion)}
-                                        >
-                                            Eliminar
-                                        </button>
+                                <tr key={i.idInterrupcion} className="hover:bg-gray-50">
+                                    <td className="px-6 py-4">{i.tipo}</td>
+                                    <td className="px-6 py-4">{new Date(i.fecha).toLocaleDateString()}</td>
+                                    <td className="px-6 py-4">{i.duracion}</td>
+                                    <td className="px-6 py-4">{i.fase}</td>
+                                    <td className="px-6 py-4">{i.persona ? `${i.persona.nombre} ${i.persona.apellido}` : 'Sin nombre'}</td>
+                                    <td className="px-6 py-4">{i.proyecto ? i.proyecto.nombre : 'No asignado'}</td>
+                                    <td className="px-6 py-4 text-center space-x-2">
+                                        <ConditionalRender condition={canViewAllInterruptions()}>
+                                            <button
+                                                className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
+                                                onClick={() => handleEditar(i.idInterrupcion)}
+                                            >
+                                                Editar
+                                            </button>
+                                        </ConditionalRender>
+
+                                        <ConditionalRender condition={canViewAllInterruptions()}>
+                                            <button
+                                                className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                                                onClick={() => handleEliminar(i.idInterrupcion)}
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </ConditionalRender>
                                     </td>
                                 </tr>
                             ))

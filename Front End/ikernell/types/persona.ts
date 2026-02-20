@@ -9,11 +9,12 @@ export interface Persona {
     direccion?: string;
     profesion?: string;
     especialidad?: string;
+    correo?: string;
     estado: boolean;
     foto?: string;
     fechaNacimiento?: string;
     rol: Rol;
-    proyecto?: Proyecto;
+    proyecto?: Proyecto[];
     password?: string;
 }
 
@@ -24,8 +25,10 @@ export interface PersonaFormData {
     direccion?: string;
     profesion?: string;
     especialidad?: string;
+    correo?: string;
     estado: boolean;
-    password?: string;
     foto?: string;
+    fechaNacimiento?: string;
     idRol: string;
+    password?: string;
 }

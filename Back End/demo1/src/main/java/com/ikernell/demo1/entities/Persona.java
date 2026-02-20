@@ -2,7 +2,6 @@ package com.ikernell.demo1.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jdk.jfr.MemoryAddress;
 import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +23,7 @@ public class Persona {
     private String direccion;
     private String profesion;
     private String especialidad;
+    private String correo;
 
     @Column(length = 500)
     private String foto;
@@ -37,11 +37,12 @@ public class Persona {
     @JoinColumn(name = "id_rol")
     private Rol rol;
 
-    @ManyToOne
-    @JoinColumn(name = "id_proyecto")
-    private Proyecto proyecto;
-
-    @ManyToMany(mappedBy = "personas")
+    @ManyToMany
+    @JoinTable(
+            name = "persona_proyecto",
+            joinColumns = @JoinColumn(name = "id_persona"),
+            inverseJoinColumns = @JoinColumn(name = "id_proyecto")
+    )
     @JsonIgnore
     private List<Proyecto> proyectos;
 
@@ -141,19 +142,19 @@ public class Persona {
         this.foto = foto;
     }
 
-    public Proyecto getProyecto() {
-        return proyecto;
-    }
-
-    public void setProyecto(Proyecto proyecto) {
-        this.proyecto = proyecto;
-    }
-
     public List<Proyecto> getProyectos() {
         return proyectos;
     }
 
     public void setProyectos(List<Proyecto> proyectos) {
         this.proyectos = proyectos;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 }

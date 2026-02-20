@@ -108,6 +108,31 @@ export async function verPersona(idPersona:number): Promise<Persona> {
         return data;
     } catch (error) {
         console.error("Error en ver persona", error);
-        throw new Error("Error al obtener proyectos desde el servidor");
+        throw new Error("Error al obtener persona desde el servidor");
+    }
+}
+
+export async function getProyectosDePersona(idPersona: number) {
+    try {
+        // Obtener todos los proyectos
+        const res = await fetch(`http://localhost:8080/api/proyectos`);
+        
+        if (!res.ok) {
+            throw new Error(`Error ${res.status}: ${res.statusText}`);
+        }
+
+        const todosLosProyectos = await res.json();
+        
+        // Filtrar proyectos que contengan a esta persona
+        const proyectosDeLaPersona = todosLosProyectos.filter((proyecto: any) => {
+            return proyecto.personas && proyecto.personas.some((persona: any) => 
+                persona.idPersona === idPersona
+            );
+        });
+
+        return proyectosDeLaPersona;
+    } catch (error) {
+        console.error("Error al obtener proyectos de persona:", error);
+        return [];
     }
 }

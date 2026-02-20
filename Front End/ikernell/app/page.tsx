@@ -1,8 +1,8 @@
 'use client';
 
 import { useAuth } from '@/app/context/AuthContext';
-import { HomePublica } from '@/app/components/HomePublica';
-import { HomePrivada } from '@/app/components/HomePrivada';
+import HomePublica from '@/app/components/HomePublica';
+import HomePrivada from '@/app/components/HomePrivada';
 
 export default function Home() {
   const { estaAutenticado, cargando } = useAuth();

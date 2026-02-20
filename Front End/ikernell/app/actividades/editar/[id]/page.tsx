@@ -77,7 +77,7 @@ export default function EditarActividadPage() {
                     onClick={() => router.push("/actividades")}
                     className="btn-secondary"
                 >
-                    ← Volver
+                    Volver
                 </button>
             </div>
 

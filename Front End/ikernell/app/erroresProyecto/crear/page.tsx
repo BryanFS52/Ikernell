@@ -72,12 +72,12 @@ export default function CrearErrorProyectoPage() {
     return (
         <div className="page">
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold">Nuevo Error de Proyecto</h1>
+                <h1 className="text-2xl font-bold">Nuevo Error en proyecto</h1>
                 <button
                     onClick={() => router.push("/erroresProyecto")}
                     className="btn-secondary"
                 >
-                    ← Volver
+                    Volver
                 </button>
             </div>
 
@@ -85,7 +85,7 @@ export default function CrearErrorProyectoPage() {
                 <div className="form-grid-2">
                     <div className="form-field">
                         <label htmlFor="tipoError" className="form-label">
-                            Tipo de Error
+                            Tipo de error
                         </label>
                         <input
                             type="text"
@@ -101,7 +101,7 @@ export default function CrearErrorProyectoPage() {
 
                     <div className="form-field">
                         <label htmlFor="fase" className="form-label">
-                            Fase del Proyecto
+                            Fase del proyecto
                         </label>
                         <select
                             id="fase"
@@ -124,7 +124,7 @@ export default function CrearErrorProyectoPage() {
 
                     <div className="form-field">
                         <label htmlFor="idProyecto" className="form-label">
-                            Proyecto Afectado
+                            Proyecto afectado
                         </label>
                         <select
                             id="idProyecto"
@@ -145,7 +145,7 @@ export default function CrearErrorProyectoPage() {
 
                     <div className="form-field">
                         <label htmlFor="idPersona" className="form-label">
-                            Persona Responsable
+                            Persona responsable
                         </label>
                         <select
                             id="idPersona"

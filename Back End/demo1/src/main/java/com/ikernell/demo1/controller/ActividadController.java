@@ -1,5 +1,4 @@
 package com.ikernell.demo1.controller;
-import com.ikernell.demo1.dto.ReporteDesempenoDTO;
 import com.ikernell.demo1.entities.Actividad;
 import com.ikernell.demo1.entities.EstadoActividad;
 import com.ikernell.demo1.service.ActividadService;

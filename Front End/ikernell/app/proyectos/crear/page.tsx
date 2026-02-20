@@ -44,7 +44,15 @@ export default function CrearProyectoPage() {
 
     return (
         <div className="page">
-            <h1 className="text-2xl font-bold mb-4">Nuevo Proyecto</h1>
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-2xl font-bold">Nuevo proyecto</h1>
+                <button
+                    onClick={() => router.push("/proyectos")}
+                    className="btn-secondary"
+                >
+                    Volver
+                </button>
+            </div>
 
             <form onSubmit={handleSubmit} className="form">
                 <div className="form-grid-2">
@@ -99,6 +107,7 @@ export default function CrearProyectoPage() {
                             {loading ? "Guardando..." : "Crear Proyecto"}
                         </button>
                     </div>
+
                 </div>
             </form>
         </div>
