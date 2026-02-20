@@ -61,9 +61,10 @@ export default function ErrorProyectoForm({
     }
 
     function handleChange(e: any) {
+        const { name, value } = e.target;
         setForm({
             ...form,
-            [e.target.name]: e.target.value
+            [name]: value,
         });
     }
 
@@ -93,35 +94,80 @@ export default function ErrorProyectoForm({
     }
 
     return (
-        <form onSubmit={handleSubmit} className="form-container flex flex-col gap-4">
-            <input
-                name="tipo de error" value={form.tipoError} onChange={handleChange} required
-            />
-            <input
-                name="fase" value={form.fase} onChange={handleChange} required
-            />
+        <form onSubmit={handleSubmit} className="space-y-6">
 
-            <select name="idProyecto" value={form.idProyecto} onChange={handleChange} required>
-                <option value="">Selecciona un proyecto</option>
-                {proyectos.map((proyecto) => (
-                    <option key={proyecto.idProyecto} value={proyecto.idProyecto}>
-                        {proyecto.nombre}
-                    </option>
-                ))}
-            </select>
+            {/* Tipo de error */}
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de error</label>
+                <input
+                    name="tipoError"
+                    value={form.tipoError}
+                    onChange={handleChange}
+                    required
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+            </div>
 
-            <select name="idPersona" value={form.idPersona} onChange={handleChange} required>
-                <option value="">Selecciona una persona</option>
-                {personas.map((persona) => (
-                    <option key={persona.idPersona} value={persona.idPersona}>
-                        {persona.nombre} {persona.apellido}
-                    </option>
-                ))}
-            </select>
+            {/* Fase */}
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Fase</label>
+                <input
+                    name="fase"
+                    value={form.fase}
+                    onChange={handleChange}
+                    required
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+            </div>
 
-            <button type="submit" className="btn-primary">
-                {mode === "crear" ? "Crear" : "Guardar"}
-            </button>
+            {/* Proyecto y persona */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Proyecto</label>
+                    <select
+                        name="idProyecto"
+                        value={form.idProyecto}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    >
+                        <option value="">Selecciona un proyecto</option>
+                        {proyectos.map((proyecto) => (
+                            <option key={proyecto.idProyecto} value={proyecto.idProyecto}>
+                                {proyecto.nombre}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Responsable</label>
+                    <select
+                        name="idPersona"
+                        value={form.idPersona}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    >
+                        <option value="">Selecciona una persona</option>
+                        {personas.map((persona) => (
+                            <option key={persona.idPersona} value={persona.idPersona}>
+                                {persona.nombre} {persona.apellido}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
+            <div className="pt-4">
+                <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-medium hover:bg-blue-700 transition shadow"
+                >
+                    {mode === "crear" ? "Registrar error" : "Actualizar error"}
+                </button>
+            </div>
+
         </form>
     );
 }

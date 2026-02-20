@@ -59,11 +59,12 @@ export default function ContactoPage() {
                     </p>
                 </div>
 
-                <div className="grid lg:grid-cols-2 gap-12">
+                <div className="grid lg:grid-cols-2 gap-8 items-start">
                     
                     {/* Formulario de Contacto */}
-                    <div className="bg-white rounded-xl shadow-lg p-8">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Envíanos un mensaje</h2>
+                    <div className="max-w-xl mx-auto w-full">
+                        <div className="bg-white rounded-xl shadow-lg p-6">
+                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Envíanos un mensaje</h2>
                         
                         {mensajeEnviado && (
                             <div className="mb-6 p-4 bg-green-100 border border-green-400 rounded-lg">
@@ -73,8 +74,8 @@ export default function ContactoPage() {
                             </div>
                         )}
                         
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid md:grid-cols-2 gap-4">
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div className="grid md:grid-cols-2 gap-3">
                                 <div>
                                     <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-2">
                                         Nombre completo *
@@ -147,7 +148,7 @@ export default function ContactoPage() {
                                     name="tipoConsulta"
                                     value={formData.tipoConsulta}
                                     onChange={handleInputChange}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                                 >
                                     <option value="general">Consulta general</option>
                                     <option value="desarrollo">Desarrollo de software</option>
@@ -165,30 +166,33 @@ export default function ContactoPage() {
                                 <textarea
                                     id="mensaje"
                                     name="mensaje"
-                                    rows={5}
+                                    rows={4}
                                     value={formData.mensaje}
                                     onChange={handleInputChange}
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                                     placeholder="Cuéntanos sobre tu proyecto o consulta..."
                                 />
                             </div>
-                            
-                            <button
-                                type="submit"
-                                disabled={enviando}
-                                className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-200 font-medium disabled:bg-blue-400 disabled:cursor-not-allowed"
-                            >
-                                {enviando ? 'Enviando...' : 'Enviar mensaje'}
-                            </button>
-                        </form>
+                                
+                                <div>
+                                    <button
+                                        type="submit"
+                                        disabled={enviando}
+                                        className="w-full bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition duration-200 font-medium disabled:bg-blue-400 disabled:cursor-not-allowed"
+                                    >
+                                        {enviando ? 'Enviando...' : 'Enviar mensaje'}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                     {/* Información de Contacto */}
                     <div className="space-y-8">
                         
                         {/* Datos de Contacto */}
-                        <div className="bg-white rounded-xl shadow-lg p-8">
+                        <div className="bg-white rounded-xl shadow-lg p-6">
                             <h2 className="text-2xl font-bold text-gray-900 mb-6">Información de contacto</h2>
                             
                             <div className="space-y-6">
@@ -257,7 +261,7 @@ export default function ContactoPage() {
                         </div>
 
                         {/* Servicios Destacados */}
-                        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-xl shadow-lg p-8">
+                        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-xl shadow-lg p-6">
                             <h2 className="text-2xl font-bold mb-6">¿En qué podemos ayudarte?</h2>
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3">
@@ -285,34 +289,7 @@ export default function ContactoPage() {
                             </div>
                         </div>
 
-                        {/* Ubicación */}
-                        <div className="bg-white rounded-xl shadow-lg p-8">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-6">Nuestra ubicación</h2>
-                            <div className="bg-gray-200 rounded-lg h-48 flex items-center justify-center">
-                                <div className="text-center text-gray-500">
-                                    <svg className="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    <p>Mapa interactivo</p>
-                                    <p className="text-sm">Calle 35 # 10 - 43, Bogotá</p>
-                                </div>
-                            </div>
-                            
-                            <div className="mt-4 text-center">
-                                <a 
-                                    href="https://maps.app.goo.gl/EaGMABGYGnQgSk9i7"
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
-                                >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                    </svg>
-                                    Ver en Google Maps
-                                </a>
-                            </div>
-                        </div>
+                        
 
                     </div>
                 </div>

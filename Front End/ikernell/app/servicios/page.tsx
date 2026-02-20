@@ -262,7 +262,7 @@ export default function ServiciosPage() {
                         Contactar Ahora
                     </button>
                     <button
-                        onClick={() => router.push('/preguntas')}
+                        onClick={() => router.push('/#preguntas')}
                         className="border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg transition font-semibold"
                     >
                         Hacer una Pregunta

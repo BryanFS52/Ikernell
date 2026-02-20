@@ -196,7 +196,7 @@ export default function TutorialesPage() {
                     no dudes en contactar a nuestro equipo de soporte.
                 </p>
                 <button
-                    onClick={() => router.push('/preguntas')}
+                    onClick={() => router.push('/#preguntas')}
                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
                 >
                     Hacer una Pregunta

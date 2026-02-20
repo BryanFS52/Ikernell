@@ -24,10 +24,15 @@ export async function crearInterrupcion(interrupcion: any): Promise<Interrupcion
     });
 
     if (!res.ok) {
-        throw new Error("Error al crear interrupción");
+        const text = await res.text().catch(() => '');
+        throw new Error(`Error al crear interrupción: ${res.status} ${res.statusText} ${text}`);
     }
 
-    return res.json();
+    try {
+        return await res.json();
+    } catch (err) {
+        return {} as Interrupcion;
+    }
 }
 
 
@@ -41,10 +46,15 @@ export async function actualizarInterrupcion(id: number, interrupcion: any): Pro
     });
 
     if (!res.ok) {
-        throw new Error("Error al actualizar interrupción");
+        const text = await res.text().catch(() => '');
+        throw new Error(`Error al actualizar interrupción: ${res.status} ${res.statusText} ${text}`);
     }
 
-    return res.json();
+    try {
+        return await res.json();
+    } catch (err) {
+        return {} as Interrupcion;
+    }
 }
 
 export async function eliminarInterrupcion(id: number): Promise<void> {
