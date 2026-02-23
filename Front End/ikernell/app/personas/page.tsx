@@ -67,7 +67,6 @@ export default function PersonaPage() {
         return <p className="text-center mt-10">Cargando personas</p>;
     }
 
-    // Verificar permisos básicos para ver la página
     if (!canManagePersonas()) {
         return (
             <div className="page">

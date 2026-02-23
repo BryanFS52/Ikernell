@@ -2,6 +2,7 @@
 
 import { AuthProvider, useAuth } from '@/app/context/AuthContext';
 import { Navbar } from '@/app/components/Navbar';
+import SessionStatus from '@/components/SessionStatus';
 import { ReactNode } from 'react';
 
 function AppLayoutContent({ children }: { children: ReactNode }) {
@@ -19,6 +20,7 @@ function AppLayoutContent({ children }: { children: ReactNode }) {
     return (
         <>
             {estaAutenticado && <Navbar />}
+            {estaAutenticado && <SessionStatus />}
             <main>{children}</main>
         </>
     );

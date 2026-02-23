@@ -163,10 +163,8 @@ export default function VerPersonaPage() {
                                     <p className="text-gray-700">No asignado</p>
                                 )}
                             </div>
-
                         </div>
                     </section>
-
                 </div>
             </div>
         </div>

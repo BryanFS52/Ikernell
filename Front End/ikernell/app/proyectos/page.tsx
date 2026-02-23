@@ -35,8 +35,7 @@ export default function ProyectosPage() {
             const data = await getProyecto();
 
             let proyectosFiltrados = data;
-
-            // Si es desarrollador, solo mostrar proyectos asignados
+            
             if (isDesarrollador() && usuario) {
                 proyectosFiltrados = data.filter(proyecto =>
                     proyecto.personas?.some(persona =>

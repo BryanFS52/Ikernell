@@ -6,6 +6,7 @@ export interface AuthContextType {
     cargando: boolean;
     iniciarSesion: (usuario: string, contraseña: string) => Promise<void>;
     cerrarSesion: () => void;
+    obtenerTiempoRestante: () => number;
 }
 
 export interface CredencialesLogin {
