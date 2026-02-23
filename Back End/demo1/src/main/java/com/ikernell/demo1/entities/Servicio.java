@@ -18,6 +18,10 @@ public class Servicio {
     private String nombre;
     private String descripcion;
 
+    @ManyToOne
+    @JoinColumn(name = "id_proyecto")
+    private Proyecto proyecto;
+
     public Long getIdServicio() {
         return idServicio;
     }
@@ -40,5 +44,13 @@ public class Servicio {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
     }
 }

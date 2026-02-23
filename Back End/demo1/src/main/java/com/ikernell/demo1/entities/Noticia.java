@@ -19,6 +19,10 @@ public class Noticia {
     private String contenido;
     private LocalDate fecha;
 
+    @ManyToOne
+    @JoinColumn(name = "id_proyecto")
+    private Proyecto proyecto;
+
     public Long getIdNoticia() {
         return idNoticia;
     }
@@ -49,5 +53,13 @@ public class Noticia {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
     }
 }
