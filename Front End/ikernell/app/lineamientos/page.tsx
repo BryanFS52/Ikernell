@@ -13,12 +13,12 @@ export default function LineamientosPage() {
     useEffect(() => {
         const handleScroll = () => {
             const sections = [
-                'introduccion', 'mision-vision', 'valores', 'desarrollo', 
-                'calidad', 'proyectos', 'comunicacion', 'seguridad', 
+                'introduccion', 'mision-vision', 'valores', 'desarrollo',
+                'calidad', 'proyectos', 'comunicacion', 'seguridad',
                 'innovacion', 'recursos-humanos'
             ];
             
-            const scrollPosition = window.scrollY + 200; // Offset para mejor detección
+            const scrollPosition = window.scrollY + 200;
             
             for (let i = sections.length - 1; i >= 0; i--) {
                 const element = document.getElementById(sections[i]);
@@ -30,7 +30,7 @@ export default function LineamientosPage() {
         };
 
         window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Ejecutar una vez al cargar
+        handleScroll();
         
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -349,7 +349,7 @@ export default function LineamientosPage() {
                         <div className="mt-12 bg-gray-800 text-white rounded-xl p-8 text-center">
                             <h3 className="text-xl font-semibold mb-4">Cumplimiento y Actualizaciones</h3>
                             <p className="text-gray-300 mb-4">
-                                Estos lineamientos son revisados y actualizados trimestralmente. 
+                                Estos lineamientos son revisados y actualizados trimestralmente.
                                 Todos los colaboradores deben confirmar su lectura y cumplimiento.
                             </p>
                             <div className="text-sm text-gray-400">

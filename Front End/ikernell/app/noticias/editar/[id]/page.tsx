@@ -54,7 +54,7 @@ export default function EditarNoticiaPage() {
                     <h1 className="text-3xl font-bold text-gray-900">Editar Noticia</h1>
                     <button
                         onClick={() => router.push("/noticias")}
-                        className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow"
                     >
                         Volver
                     </button>

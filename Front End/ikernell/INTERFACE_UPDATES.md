@@ -96,7 +96,7 @@ Incluye:
 
 ---
 
-## 📁 Archivos Creados/Modificados
+## Archivos Creados/Modificados
 
 ### **Componentes Nuevos:**
 
@@ -359,14 +359,4 @@ CREATE TABLE respuestas (
 - Revisar `layout.tsx` tiene `AppLayout`
 
 ---
-
-## 📝 Próximas Mejoras
-
-- [ ] Notificaciones en tiempo real (Socket.io)
-- [ ] Ratings/Valoración de respuestas
-- [ ] Búsqueda de preguntas
-- [ ] Etiquetas/categorías en preguntas
-- [ ] Email automático cuando se responde
-- [ ] Panel de moderación (marcar como spam)
-- [ ] Exportar preguntas/respuestas a PDF
 

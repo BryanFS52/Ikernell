@@ -41,7 +41,7 @@ export default function NoticiasPage() {
         }
     }
 
-    const noticiasFiltradas = noticias.filter(n => 
+    const noticiasFiltradas = noticias.filter(n =>
         n.titulo.toLowerCase().includes(searchTitulo.toLowerCase())
     );
 
