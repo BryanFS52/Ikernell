@@ -129,7 +129,7 @@ export function FormularioPreguntaPublica({ onSuccess }: FormularioPreguntaPubli
                         type="submit"
                         disabled={cargando}
                         className={`w-full py-4 px-6 rounded-xl font-semibold text-white transition-all duration-200 shadow-lg transform hover:scale-[1.02] ${
-                            cargando 
+                            cargando
                                 ? 'bg-gray-400 cursor-not-allowed' 
                                 : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-blue-500/25 hover:shadow-blue-500/40'
                         }`}

@@ -11,7 +11,7 @@ Se ha implementado un **sistema completo de reportes y analytics** para la gesti
 
 ## Arquitectura del Sistema
 
-### 📁 Archivos Principales
+### Archivos Principales
 
 ```
 /types/reporte.ts           # Definiciones de tipos TypeScript
@@ -37,7 +37,7 @@ Se ha implementado un **sistema completo de reportes y analytics** para la gesti
    - Proyectos asignados
    - Balance de recursos
 
-#### 📈 **Reportes de Desempeño**
+#### **Reportes de Desempeño**
 4. **Reporte de Desempeño de Personas**
    - Top 5 personas con mayor carga
    - Porcentaje de éxito por persona
@@ -49,7 +49,7 @@ Se ha implementado un **sistema completo de reportes y analytics** para la gesti
    - Impacto en proyectos
    - Clasificación de impacto (Alto/Medio/Bajo)
 
-#### 🔍 **Reportes Detallados**
+#### **Reportes Detallados**
 6. **Actividades Detallado**
    - Análisis exhaustivo con métricas avanzadas
    - Dados completos en JSON estructurado
@@ -80,7 +80,7 @@ Se ha implementado un **sistema completo de reportes y analytics** para la gesti
 - Cards con hover effects
 - Grid layout adaptativo
 
-### 🎛️ **Controles de Exportación**
+### **Controles de Exportación**
 - Selector de formato (JSON/CSV/Excel)
 - Botones de acción intuitivos
 - Descarga automática de archivos
@@ -94,13 +94,13 @@ Se ha implementado un **sistema completo de reportes y analytics** para la gesti
 
 ## Funcionalidades Técnicas
 
-### 🔄 **Generación de Reportes**
+### **Generación de Reportes**
 ```typescript
 // Ejemplo de uso
 const reporte = await generarReporte('DESEMPENO_PERSONAS');
 ```
 
-### 📤 **Exportación**
+### **Exportación**
 ```typescript
 // Exportar en diferentes formatos
 exportarReporteCompleto(datos, tipo, 'CSV');
@@ -115,13 +115,13 @@ exportarReporteCompleto(datos, tipo, 'JSON');
 
 ## Métricas Incluidas
 
-### 📈 **Performance Metrics**
+### **Performance Metrics**
 - Total de actividades completadas vs pendientes
 - Promedio de actividades por persona
 - Porcentaje de éxito por proyecto
 - Tasa de completitud general
 
-### ⏱️ **Análisis Temporal**
+### **Análisis Temporal**
 - Interrupciones por duración
 - Distribución temporal de actividades
 - Análisis de tendencias
@@ -134,13 +134,13 @@ exportarReporteCompleto(datos, tipo, 'JSON');
 ## Estado Técnico
 
 ### **Completado**
-- [x] Todas las interfaces de tipos definidas
-- [x] Servicios de generación implementados
-- [x] Funciones de exportación operativas
-- [x] Interfaz de usuario completamente funcional
-- [x] Manejo de errores robusto
-- [x] Estados boolean correctamente implementados
-- [x] Tipos TypeScript sin errores
+- Todas las interfaces de tipos definidas
+- Servicios de generación implementados
+- Funciones de exportación operativas
+- Interfaz de usuario completamente funcional
+- Manejo de errores robusto
+- Estados boolean correctamente implementados
+- Tipos TypeScript sin errores
 
 ### **Características Destacadas**
 - **Offline resilience**: Manejo graceful de errores de API
@@ -150,19 +150,19 @@ exportarReporteCompleto(datos, tipo, 'JSON');
 
 ## Uso y Navegación
 
-### 📍 **Acceso Principal**
+### **Acceso Principal**
 ```
 /app/reportes/page.tsx
 ```
 
-### 🎮 **Flujo de Usuario**
+### **Flujo de Usuario**
 1. Seleccionar categoria de reporte deseada
 2. Hacer clic en "Generar Reporte"
 3. Revisar los datos generados
 4. Seleccionar formato de exportación
 5. Descargar archivo con un clic
 
-### 🔄 **Navegación**
+### **Navegación**
 - **Botón "Generar Personalizado"**: Futuras funcionalidades
 - **Botón "Volver"**: Regresa al dashboard principal
 - **Botón "Cerrar Reporte"**: Limpia la vista actual
@@ -176,7 +176,7 @@ El sistema de reportes está **100% funcional** y listo para uso en producción,
 - **Interfaz intuitiva** y responsive
 - **Arquitectura escalable** para futuros reportes
 
-**Total de reportes:** 9 tipos especializados  
-**Formatos de export:** 3 (JSON, CSV, Excel)  
-**Categorías:** 4 agrupaciones lógicas  
+**Total de reportes:** 9 tipos especializados
+**Formatos de export:** 3 (JSON, CSV, Excel)
+**Categorías:** 4 agrupaciones lógicas
 **Estado:** Producción Ready

@@ -17,8 +17,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Función para limpiar la sesión
     const limpiarSesion = useCallback(() => {
         setUsuario(null);
-        sessionStorage.removeItem('sesion');
-        sessionStorage.removeItem('tiempoUltimaActividad');
+        localStorage.removeItem('sesion');
+        localStorage.removeItem('tiempoUltimaActividad');
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = null;
@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Función para renovar el timeout de inactividad
     const renovarTimeout = useCallback(() => {
         const ahora = Date.now();
-        sessionStorage.setItem('tiempoUltimaActividad', ahora.toString());
+        localStorage.setItem('tiempoUltimaActividad', ahora.toString());
         
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Función para verificar si la sesión ha expirado
     const verificarExpiracionSesion = useCallback(() => {
-        const tiempoUltimaActividad = sessionStorage.getItem('tiempoUltimaActividad');
+        const tiempoUltimaActividad = localStorage.getItem('tiempoUltimaActividad');
         if (tiempoUltimaActividad) {
             const ahora = Date.now();
             const tiempoTranscurrido = ahora - parseInt(tiempoUltimaActividad);
@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, [usuario, renovarTimeout]);
 
     useEffect(() => {
-        const sesionGuardada = sessionStorage.getItem('sesion');
+        const sesionGuardada = localStorage.getItem('sesion');
         if (sesionGuardada) {
             try {
                 const usuarioGuardado = JSON.parse(sesionGuardada);
@@ -82,8 +82,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                     limpiarSesion();
                 }
             } catch {
-                sessionStorage.removeItem('sesion');
-                sessionStorage.removeItem('tiempoUltimaActividad');
+                localStorage.removeItem('sesion');
+                localStorage.removeItem('tiempoUltimaActividad');
             }
         }
         setCargando(false);
@@ -101,9 +101,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // Configurar verificación periódica
             intervalRef.current = setInterval(verificarExpiracionSesion, VERIFICACION_SESION_INTERVALO);
 
-            // Detectar cierre de ventana/pestaña
-            const manejarCierreVentana = (e: BeforeUnloadEvent) => {
-                limpiarSesion();
+            // Detectar cambios en otras pestañas
+            const manejarCambiosStorage = (e: StorageEvent) => {
+                if (e.key === 'sesion' && e.newValue === null) {
+                    // Otra pestaña cerró sesión
+                    limpiarSesion();
+                } else if (e.key === 'tiempoUltimaActividad' && e.newValue) {
+                    // Sincronizar actividad entre pestañas
+                    renovarTimeout();
+                }
             };
 
             const manejarVisibilidadCambio = () => {
@@ -114,14 +120,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 }
             };
 
-            window.addEventListener('beforeunload', manejarCierreVentana);
+            window.addEventListener('storage', manejarCambiosStorage);
             document.addEventListener('visibilitychange', manejarVisibilidadCambio);
 
             return () => {
                 eventos.forEach(evento => {
                     document.removeEventListener(evento, manejarActividad, true);
                 });
-                window.removeEventListener('beforeunload', manejarCierreVentana);
+                window.removeEventListener('storage', manejarCambiosStorage);
                 document.removeEventListener('visibilitychange', manejarVisibilidadCambio);
                 
                 if (intervalRef.current) {
@@ -149,7 +155,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const usuarioActual = await response.json();
             setUsuario(usuarioActual);
             
-            sessionStorage.setItem('sesion', JSON.stringify(usuarioActual));
+            localStorage.setItem('sesion', JSON.stringify(usuarioActual));
             renovarTimeout();
         } catch (error) {
             throw error;
@@ -162,7 +168,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Función para obtener el tiempo restante de sesión
     const obtenerTiempoRestante = () => {
-        const tiempoUltimaActividad = sessionStorage.getItem('tiempoUltimaActividad');
+        const tiempoUltimaActividad = localStorage.getItem('tiempoUltimaActividad');
         if (!tiempoUltimaActividad) return 0;
         
         const ahora = Date.now();

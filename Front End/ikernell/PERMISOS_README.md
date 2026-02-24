@@ -41,7 +41,7 @@ Define los roles, módulos, acciones y la matriz de permisos:
 ```typescript
 export const ROLES = {
     COORDINADOR_PROYECTOS: 1,
-    LIDER_PROYECTOS: 2, 
+    LIDER_PROYECTOS: 2,
     DESARROLLADOR: 3
 };
 
@@ -55,7 +55,7 @@ export const ROLE_PERMISSIONS = {
 ### `/hooks/usePermissions.ts`
 Hook personalizado para verificar permisos:
 ```typescript
-const { 
+const {
     canCreateProjects,
     canViewAllProjects,
     canCompleteOwnActivities,

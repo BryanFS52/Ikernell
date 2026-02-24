@@ -288,7 +288,7 @@ public class NoticiaDTO {
 
 ## Seguridad
 
-**IMPORTANTE:** 
+**IMPORTANTE:**
 
 El frontend ahora verifca que el usuario sea "Coordinador de Proyectos" antes de mostrar el formulario:
 
@@ -310,7 +310,7 @@ public ResponseEntity<Noticia> crearNoticia(@RequestBody NoticiaDTO dto) {
 
 ---
 
-## 📝 Archivo de Tipo Noticia
+## Archivo de Tipo Noticia
 
 ```typescript
 export interface Noticia {
@@ -323,7 +323,7 @@ export interface Noticia {
 
 ---
 
-## 🧪 Prueba el Sistema
+## Prueba el Sistema
 
 ### 1. **Crear noticias desde Postman:**
 
@@ -349,7 +349,7 @@ Content-Type: application/json
 
 ---
 
-## ✨ Resumen Rápido
+## Resumen Rápido
 
 | Feature | Sin Login | Coordinador | Otro Usuario |
 |---------|-----------|-------------|--------------|
@@ -360,7 +360,7 @@ Content-Type: application/json
 
 ---
 
-## 🆘 Troubleshooting
+## Troubleshooting
 
 ### **"Error al agregar noticia"**
 - Verifica que el endpoint POST `/api/noticias` existe
