@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @Service
-
 public class PersonaService {
 
     private final PersonaRepository personaRepository;
@@ -67,7 +66,6 @@ public class PersonaService {
     ) throws Exception {
 
         Persona persona = new Persona();
-
         persona.setNombre(nombre);
         persona.setApellido(apellido);
         persona.setDocumento(documento);

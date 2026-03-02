@@ -2,10 +2,6 @@ package com.ikernell.demo1.service;
 import com.ikernell.demo1.entities.Pregunta;
 import com.ikernell.demo1.repositories.PreguntaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.time.LocalDate;
 import java.util.List;
 
