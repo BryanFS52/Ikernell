@@ -3,7 +3,6 @@ import com.ikernell.demo1.entities.Persona;
 import com.ikernell.demo1.service.PersonaService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 @RestController

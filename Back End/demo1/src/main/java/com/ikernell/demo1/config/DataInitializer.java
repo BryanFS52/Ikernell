@@ -1,5 +1,4 @@
 package com.ikernell.demo1.config;
-
 import com.ikernell.demo1.entities.Etapa;
 import com.ikernell.demo1.entities.Rol;
 import com.ikernell.demo1.repositories.EtapaRepository;
@@ -7,7 +6,6 @@ import com.ikernell.demo1.repositories.RolRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import java.util.List;
 
 @Configuration

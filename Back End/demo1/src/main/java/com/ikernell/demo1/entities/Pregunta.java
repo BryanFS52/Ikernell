@@ -22,9 +22,9 @@ public class Pregunta {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
-    @ManyToOne
-    @JoinColumn(name = "id_persona")
-    private Persona persona;
+//    @ManyToOne
+//    @JoinColumn(name = "id_persona")
+//    private Persona persona;
 
     @ElementCollection
     private List<String> respuestas = new ArrayList<>();
@@ -88,11 +88,11 @@ public class Pregunta {
         this.respuestas = respuestas;
     }
 
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
-    }
+//    public Persona getPersona() {
+//        return persona;
+//    }
+//
+//    public void setPersona(Persona persona) {
+//        this.persona = persona;
+//    }
 }

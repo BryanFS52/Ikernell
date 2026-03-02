@@ -2,11 +2,9 @@ package com.ikernell.demo1.controller;
 import com.ikernell.demo1.entities.Interrupcion;
 import com.ikernell.demo1.entities.Persona;
 import com.ikernell.demo1.entities.Proyecto;
-import com.ikernell.demo1.repositories.InterrupcionRepository;
 import com.ikernell.demo1.repositories.PersonaRepository;
 import com.ikernell.demo1.repositories.ProyectoRepository;
 import com.ikernell.demo1.service.InterrupcionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
