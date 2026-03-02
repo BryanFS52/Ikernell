@@ -102,18 +102,18 @@ export default function LineamientosPage() {
                                 </h2>
                                 <div className="prose max-w-none">
                                     <p className="text-lg text-gray-700 mb-4">
-                                        Los lineamientos empresariales de Ikernell constituyen el marco normativo y cultural 
-                                        que orienta todas las actividades de nuestra organización especializada en desarrollo 
+                                        Los lineamientos empresariales de Ikernell constituyen el marco normativo y cultural
+                                        que orienta todas las actividades de nuestra organización especializada en desarrollo
                                         de software, aplicaciones móviles y consultoría tecnológica.
                                     </p>
                                     <p className="text-gray-600 mb-4">
-                                        Estos lineamientos han sido diseñados para asegurar la excelencia en la entrega 
-                                        de soluciones tecnológicas, mantener los más altos estándares de calidad y 
+                                        Estos lineamientos han sido diseñados para asegurar la excelencia en la entrega
+                                        de soluciones tecnológicas, mantener los más altos estándares de calidad y
                                         fomentar un ambiente de trabajo colaborativo e innovador.
                                     </p>
                                     <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
                                         <p className="text-blue-800 font-medium">
-                                            Estos lineamientos son de cumplimiento obligatorio para todos 
+                                            Estos lineamientos son de cumplimiento obligatorio para todos
                                             los colaboradores y deben ser revisados periódicamente.
                                         </p>
                                     </div>

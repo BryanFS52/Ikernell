@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { crearInterrupcion, actualizarInterrupcion } from "@/services/interrupcion.service";
 import { getPersona } from "@/services/persona.service";
 import { getProyecto } from "@/services/proyecto.service";
+import { FASES_PROYECTO } from "@/constants/fases";
 
 export type InterrupcionFormProps = {
     initialData?: Interrupcion;
@@ -215,13 +216,11 @@ export default function InterrupcionForm({
                     className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 >
                     <option value="">Seleccione una fase</option>
-                    <option value="Planificacion">Planificación</option>
-                    <option value="Analisis">Análisis</option>
-                    <option value="Diseno">Diseño</option>
-                    <option value="Desarrollo">Desarrollo</option>
-                    <option value="Pruebas">Pruebas</option>
-                    <option value="Implementacion">Implementación</option>
-                    <option value="Mantenimiento">Mantenimiento</option>
+                    {FASES_PROYECTO.map((fase) => (
+                        <option key={fase.value} value={fase.value}>
+                            {fase.label}
+                        </option>
+                    ))}
                 </select>
             </div>
 

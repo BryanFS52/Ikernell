@@ -212,7 +212,6 @@ export default function HomePublica() {
                         </div>
                     </div>
                 </div>
-
                 <footer className="mt-20 text-center py-8 border-t border-white/10 relative">
                     <p className="text-slate-400">&copy; 2026 Ikernell. Sistema de Gestión Empresarial.</p>
                 </footer>

@@ -99,6 +99,10 @@ export default function ActividadesPage() {
         router.push(`/actividades/editar/${id}`);
     }
 
+    function handleVer(id: number) {
+        router.push(`/actividades/ver/${id}`);
+    }
+
     if (loading) {
         return <p className="text-center mt-10">Cargando actividades</p>;
     }
@@ -161,6 +165,15 @@ export default function ActividadesPage() {
                                     <td className="px-6 py-4">{act.estado}</td>
 
                                     <td className="px-6 py-4 text-center space-x-2">
+                                        <ConditionalRender condition={isDesarrollador() && act.persona?.idPersona === usuario?.idPersona}>
+                                            <button
+                                                className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                                                onClick={() => handleVer(act.idActividad)}
+                                            >
+                                                Ver
+                                            </button>
+                                        </ConditionalRender>
+
                                         <ConditionalRender condition={canCreateActivities()}>
                                             <button
                                                 className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"

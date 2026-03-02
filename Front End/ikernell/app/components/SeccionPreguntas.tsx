@@ -130,12 +130,14 @@ export function SeccionPreguntas({
                                                     </span>
                                                 </div>
                                                 <p className="text-slate-300 leading-relaxed mb-3">{respuesta}</p>
-                                                <button
-                                                    onClick={() => handleEliminarRespuesta(pregunta.idPregunta, index)}
-                                                    className="text-red-300 text-sm hover:text-red-200 hover:bg-red-500/20 px-2 py-1 rounded transition-all duration-200"
-                                                >
-                                                    Eliminar
-                                                </button>
+                                                {esAutenticado && (
+                                                    <button
+                                                        onClick={() => handleEliminarRespuesta(pregunta.idPregunta, index)}
+                                                        className="text-red-300 text-sm hover:text-red-200 hover:bg-red-500/20 px-2 py-1 rounded transition-all duration-200"
+                                                    >
+                                                        Eliminar
+                                                    </button>
+                                                )}
                                             </div>
                                         ))}
                                     </div>
@@ -144,65 +146,68 @@ export function SeccionPreguntas({
                                 )}
                             </div>
 
-                            <div className="p-4 bg-indigo-500/10 backdrop-blur rounded-xl border border-indigo-400/30 shadow-lg">
-                                {respondiendo?.idPregunta === pregunta.idPregunta ? (
-                                    <div className="space-y-4">
-                                        <textarea
-                                            value={respondiendo.contenido}
-                                            onChange={(e) =>
+                            {/* Solo mostrar área de respuesta para usuarios autenticados */}
+                            {esAutenticado && (
+                                <div className="p-4 bg-indigo-500/10 backdrop-blur rounded-xl border border-indigo-400/30 shadow-lg">
+                                    {respondiendo?.idPregunta === pregunta.idPregunta ? (
+                                        <div className="space-y-4">
+                                            <textarea
+                                                value={respondiendo.contenido}
+                                                onChange={(e) =>
+                                                    setRespondiendo({
+                                                        ...respondiendo,
+                                                        contenido: e.target.value,
+                                                    })
+                                                }
+                                                placeholder="Escribe tu respuesta..."
+                                                className="w-full px-4 py-3 bg-white/20 backdrop-blur border border-white/30 rounded-xl text-white placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent transition-all shadow-lg resize-none"
+                                                rows={3}
+                                                disabled={cargando}
+                                            />
+                                            <div className="flex gap-3">
+                                                <button
+                                                    onClick={() => handleResponder(pregunta.idPregunta)}
+                                                    disabled={cargando || !respondiendo.contenido.trim()}
+                                                    className={`px-6 py-3 rounded-xl transition-all duration-200 font-semibold shadow-lg transform ${
+                                                        cargando || !respondiendo.contenido.trim()
+                                                            ? 'bg-gray-500/50 text-slate-400 cursor-not-allowed'
+                                                            : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white hover:scale-105 hover:shadow-indigo-500/25'
+                                                    }`}
+                                                >
+                                                    {cargando ? (
+                                                        <span className="flex items-center gap-2">
+                                                            <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                                            </svg>
+                                                            Enviando...
+                                                        </span>
+                                                    ) : 'Responder'}
+                                                </button>
+                                                <button
+                                                    onClick={() => setRespondiendo(null)}
+                                                    disabled={cargando}
+                                                    className="px-6 py-3 bg-white/10 backdrop-blur border border-white/30 text-slate-300 rounded-xl hover:bg-white/20 hover:text-white transition-all duration-200 font-semibold"
+                                                >
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <button
+                                            onClick={() =>
                                                 setRespondiendo({
-                                                    ...respondiendo,
-                                                    contenido: e.target.value,
+                                                    idPregunta: pregunta.idPregunta,
+                                                    contenido: '',
                                                 })
                                             }
-                                            placeholder="Escribe tu respuesta..."
-                                            className="w-full px-4 py-3 bg-white/20 backdrop-blur border border-white/30 rounded-xl text-white placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent transition-all shadow-lg resize-none"
-                                            rows={3}
-                                            disabled={cargando}
-                                        />
-                                        <div className="flex gap-3">
-                                            <button
-                                                onClick={() => handleResponder(pregunta.idPregunta)}
-                                                disabled={cargando || !respondiendo.contenido.trim()}
-                                                className={`px-6 py-3 rounded-xl transition-all duration-200 font-semibold shadow-lg transform ${
-                                                    cargando || !respondiendo.contenido.trim()
-                                                        ? 'bg-gray-500/50 text-slate-400 cursor-not-allowed'
-                                                        : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white hover:scale-105 hover:shadow-indigo-500/25'
-                                                }`}
-                                            >
-                                                {cargando ? (
-                                                    <span className="flex items-center gap-2">
-                                                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                                                        </svg>
-                                                        Enviando...
-                                                    </span>
-                                                ) : 'Responder'}
-                                            </button>
-                                            <button
-                                                onClick={() => setRespondiendo(null)}
-                                                disabled={cargando}
-                                                className="px-6 py-3 bg-white/10 backdrop-blur border border-white/30 text-slate-300 rounded-xl hover:bg-white/20 hover:text-white transition-all duration-200 font-semibold"
-                                            >
-                                                Cancelar
-                                            </button>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <button
-                                        onClick={() =>
-                                            setRespondiendo({
-                                                idPregunta: pregunta.idPregunta,
-                                                contenido: '',
-                                            })
-                                        }
-                                        className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl transition-all duration-200 font-semibold shadow-lg hover:shadow-blue-500/25 transform hover:scale-105"
-                                    >
-                                        Responder
-                                    </button>
-                                )}
-                            </div>
+                                            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl transition-all duration-200 font-semibold shadow-lg hover:shadow-blue-500/25 transform hover:scale-105"
+                                        >
+                                            Responder
+                                        </button>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

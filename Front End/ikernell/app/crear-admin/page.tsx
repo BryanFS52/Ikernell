@@ -106,7 +106,7 @@ export default function CrearUsuarioAdmin() {
                                 <li><strong>Usuario:</strong> 123456789</li>
                                 <li><strong>Contraseña:</strong> admin123</li>
                                 <li><strong>Documento:</strong> 123456789</li>
-                                <li><strong>Nombre:</strong> Coordinador Proyectos</li>
+                                <li><strong>Nombre:</strong> Coordinador de proyectos</li>
                                 <li><strong>Rol:</strong> Coordinador de proyectos</li>
                             </ul>
                         </div>

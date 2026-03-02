@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { getProyecto } from "@/services/proyecto.service";
 import { crearErrorProyecto, actualizarErrorProyecto } from "@/services/errorProyecto.service";
 import { getPersona } from "@/services/persona.service";
+import { FASES_PROYECTO } from "@/constants/fases";
 
 export type ErrorProyectoFormProps = {
     initialData?: ErrorProyecto;
@@ -167,13 +168,20 @@ export default function ErrorProyectoForm({
             {/* Fase */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Fase</label>
-                <input
+                <select
                     name="fase"
                     value={form.fase}
                     onChange={handleChange}
                     required
                     className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                />
+                >
+                    <option value="">Seleccione una fase</option>
+                    {FASES_PROYECTO.map((fase) => (
+                        <option key={fase.value} value={fase.value}>
+                            {fase.label}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             {/* Proyecto y persona */}
